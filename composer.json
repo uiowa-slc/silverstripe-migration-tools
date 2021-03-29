@@ -1,5 +1,5 @@
 {
-  "name": "md/silverstripe-wxr-export",
+  "name": "md/silverstripe-migration-tools",
   "description": "Exports SilverStripe content to WordPress eXtended RSS",
   "type": "silverstripe-vendormodule",
   "require":
