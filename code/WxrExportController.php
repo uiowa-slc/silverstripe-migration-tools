@@ -3,8 +3,11 @@
 use SilverStripe\Blog\Model\BlogCategory;
 use SilverStripe\Blog\Model\BlogTag;
 use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\Security\Member;
+use SilverStripe\Security\Permission;
 use SilverStripe\View\ArrayData;
 
 class WxrExportController extends Controller {
@@ -12,6 +15,17 @@ class WxrExportController extends Controller {
 	private static $url_handlers = [
 		'wxrExport/$@' => 'index',
 	];
+
+	public function init() {
+		parent::init();
+
+		if (!Permission::check('ADMIN')) {
+			//return $this->httpError(403);
+			$response = $this ? $this->getResponse() : new HTTPResponse();
+			$response->setStatusCode(403);
+			return $this->redirect(Config::inst()->get('SilverStripe\\Security\\Security', 'login_url') . "?BackURL=" . urlencode($_SERVER['REQUEST_URI']));
+		}
+	}
 
 	//In order to find all pages on the site
 	// private static $pageFilters = [

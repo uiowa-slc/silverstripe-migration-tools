@@ -7,3 +7,4 @@ After:
 SilverStripe\Control\Director:
   rules:
     'wxrExport/': 'WxrExportController'
+    'siteTreeReviewer//$Action/': 'SiteTreeReviewerController'
