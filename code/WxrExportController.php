@@ -2,15 +2,16 @@
 
 use SilverStripe\Blog\Model\BlogCategory;
 use SilverStripe\Blog\Model\BlogTag;
-use SilverStripe\Control\Controller;
+use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\View\ArrayData;
+use SilverStripe\View\Parsers\URLSegmentFilter;
 
-class WxrExportController extends Controller {
+class WxrExportController extends ContentController {
 
 	private static $url_handlers = [
 		'wxrExport/$@' => 'index',
@@ -36,6 +37,8 @@ class WxrExportController extends Controller {
 	// ];
 
 	public function index($request) {
+		$filter = new URLSegmentFilter();
+		$filename = $filter->filter($this->SiteConfig()->obj('Title')) . '.xml';
 
 		$authors = new ArrayList();
 		$pages = new ArrayList();
@@ -73,7 +76,11 @@ class WxrExportController extends Controller {
 		$dom->preserveWhiteSpace = false;
 		$dom->formatOutput = true;
 		$dom->loadXML($xml->asXML());
-		echo $dom->saveXML();
+
+		header('Content-type: text/xml');
+		header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+		print($dom->saveXML());
 
 	}
 }
