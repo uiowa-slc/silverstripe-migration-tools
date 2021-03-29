@@ -3,6 +3,7 @@
 <html class="no-js" lang="en-us">
 
 <head>
+    <% base_tag %>
     <meta charset="utf-8">
     <title>Site Tree Reviewer - $SiteConfig.Title</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto Condensed:regular,bold|Roboto:light,regular,bold,italic|Zilla Slab:regular,bold,italic" />
@@ -43,7 +44,7 @@
                 <h1>SiteTree Reviewer</h1>
                 <div class="btn-group mb-2" role="group" aria-label="">
                   <a href="siteTreeReviewer/csvExport" class="btn btn-outline-primary">Export to CSV</a>
-                  <a href="{$BaseURL}/wxrExport" class="btn btn-outline-secondary">Export to WordPress XML</a>
+                  <a href="wxrExport/" class="btn btn-outline-secondary">Export to WordPress XML</a>
                 </div>
                 <p>Exported CSV files use the <a href="https://iowa-my.sharepoint.com/:x:/g/personal/bosto_uiowa_edu/Eb0r95BQ86tMlQvisrBBOeoBPiGNgYpGNIN6pcOxYsFr_A?e=6YMVFN" target="blank">Content Inventory spreadsheet template</a> columns.</a></p>
                 <hr />
