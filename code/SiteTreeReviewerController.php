@@ -3,6 +3,7 @@
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\Security\Permission;
 
 class SiteTreeReviewerController extends ContentController {
@@ -122,6 +123,27 @@ class SiteTreeReviewerController extends ContentController {
 		$pageArray = [$page->Title, $page->AbsoluteLink(), $page->ClassName, $pageContainsFiles, '', $pageSubOrTop, $page->MetaDescription, $page->LastEdited, $pageAuthorName, '', '', ''];
 
 		return $pageArray;
+
+	}
+
+	public function RecentEditors() {
+
+		$recentPages = Page::get()->sort(array('LastEdited DESC'))->Limit(50);
+		$authors = new ArrayList();
+
+		foreach ($recentPages as $page) {
+			$versionedPage = $page->VersionsList()->Last();
+			$pageAuthor = $versionedPage->Author();
+
+			if ($pageAuthor) {
+				$authors->push($pageAuthor);
+			}
+
+		}
+
+		$authors->removeDuplicates();
+
+		return $authors;
 
 	}
 

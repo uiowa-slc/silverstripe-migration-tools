@@ -105,6 +105,11 @@ font-size: 0.9em;
         <div class="row">
             <div class="col-lg-4">
                 <h2>$SiteConfig.Title</h2>
+                <p>Recent editors:
+                    <% loop RecentEditors %><a href="mailto:$Email">$FirstName $Surname</a><% if not $Last %>,
+                    <% end_if %>
+                    <% end_loop %>
+                </p>
                 <div class="sitetree-container">
                     <ul>
                         <% loop $Menu(1) %>
