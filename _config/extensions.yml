@@ -1,0 +1,8 @@
+---
+Name: migration-tools-extensions
+After:
+    - '*'
+---
+SilverStripe\Admin\LeftAndMain:
+  extensions:
+    - SiteTreeReviewerCustomLinkExtension

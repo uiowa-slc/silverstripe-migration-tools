@@ -95,10 +95,10 @@ font-size: 0.9em;
                     <input class="form-check-input" type="checkbox" id="showEditLinksSwitch" onchange="doSwapEditLinks(this)">
                     <label class="form-check-label" for="showEditLinksSwitch">Show Edit Links</label>
                 </div>
-                <div class="form-check form-switch d-inline-block" style="margin-left: 20px;">
+<%--                 <div class="form-check form-switch d-inline-block" style="margin-left: 20px;">
                     <input class="form-check-input" type="checkbox" id="showAdvLinksSwitch" onchange="doSwapAdvLinks(this)">
                     <label class="form-check-label" for="showAdvLinksSwitch">Show Advanced Info Links</label>
-                </div>
+                </div> --%>
                 <hr />
             </div>
         </div>
