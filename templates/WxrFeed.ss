@@ -53,12 +53,12 @@
     <% loop $Tags %>
     <wp:tag>
         <wp:term_id>$ID</wp:term_id>
-        <wp:tag_slug><![CDATA[example-tag]]></wp:tag_slug>
-        <wp:tag_name><![CDATA[Example Tag]]></wp:tag_name>
+        <wp:tag_slug><![CDATA[$URLSegment]]></wp:tag_slug>
+        <wp:tag_name><![CDATA[$Title]]></wp:tag_name>
     </wp:tag>
     <% end_loop %>
 
-    <% loop $TagsCats %>
+<%--     <% loop $TagsCats %>
     <wp:term>
         <wp:term_id>$Pos</wp:term_id>
         <% if $ClassName == "BlogTag" %>
@@ -71,7 +71,7 @@
         <wp:term_parent><![CDATA[]]></wp:term_parent>
         <wp:term_name><![CDATA[$Title]]></wp:term_name>
     </wp:term>
-    <% end_loop %>
+    <% end_loop %> --%>
 
 
     <generator>https://wordpress.org/?v=5.6.1</generator>
@@ -101,7 +101,7 @@
         <wp:status><![CDATA[publish]]></wp:status>
         <wp:post_parent>$ParentID</wp:post_parent>
         <wp:menu_order>$SortOrder</wp:menu_order>
-        <% if $ClassName == "BlogPost" %>
+        <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
             <wp:post_type><![CDATA[post]]></wp:post_type>
         <% else_if $ClassName == "Topic" %>
             <wp:post_type><![CDATA[post]]></wp:post_type>
@@ -116,7 +116,7 @@
              <wp:attachment_url><![CDATA[$FeaturedImage.AbsoluteURL]]></wp:attachment_url>
                                                         <wp:postmeta>
                     <wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key>
-                    <wp:meta_value><![CDATA[2021/02/order-of-omega.png]]></wp:meta_value>
+                    <wp:meta_value><![CDATA[$FeaturedImage.AbsoluteURL]]></wp:meta_value>
                     </wp:postmeta>
                                         <wp:postmeta>
                     <wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key>

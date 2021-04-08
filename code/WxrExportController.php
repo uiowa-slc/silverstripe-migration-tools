@@ -49,6 +49,7 @@ class WxrExportController extends ContentController {
 
 		$authors = Member::get();
 		$pages = Page::get();
+		$versionedPages = new ArrayList();
 
 		$tags = BlogTag::get();
 		$cats = BlogCategory::get();
@@ -58,11 +59,17 @@ class WxrExportController extends ContentController {
 
 		$tagsCats = array_merge($tagsArray, $catsArray);
 
+		foreach ($pages as $page) {
+			$versionedPage = $page->VersionsList()->Last();
+			$versionedPages->push($versionedPage);
+
+		}
+
 		//$blogTagsCats = $blogTags->merge($blogCats);
 
 		$templateData = new ArrayData([
 			'Authors' => $authors,
-			'Pages' => $pages,
+			'Pages' => $versionedPages,
 			'Tags' => $tags,
 			'Categories' => $cats,
 			'TagsCats' => $tagsCats,
