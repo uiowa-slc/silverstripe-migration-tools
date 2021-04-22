@@ -3,6 +3,7 @@
 use SilverStripe\Blog\Model\BlogCategory;
 use SilverStripe\Blog\Model\BlogTag;
 use SilverStripe\CMS\Controllers\ContentController;
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\ArrayList;
@@ -48,10 +49,22 @@ class WxrExportController extends ContentController {
 		$tagsCats = array();
 
 		$authors = Member::get();
-		$pages = Page::get();
+
+		//normalize authors, ensure they have HawkID username
+		foreach ($authors as $author) {
+
+			if (!$author->AdUsername) {
+				$author->parseNamesAndGroups();
+				$author->write();
+			}
+		}
+
 		$versionedPages = new ArrayList();
 
 		$tags = BlogTag::get();
+
+		//TODO: Make a TopicHolder "tag" so we can successfully account for multiple TopicHolders and use taxonomy instead of a separate "page"
+
 		$cats = BlogCategory::get();
 
 		$tagsArray = $tags->toArray();
@@ -59,8 +72,14 @@ class WxrExportController extends ContentController {
 
 		$tagsCats = array_merge($tagsArray, $catsArray);
 
+		$pageExcludes = [
+
+		];
+		$pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage');
+		// print_r($pages->toArray());
 		foreach ($pages as $page) {
 			$versionedPage = $page->VersionsList()->Last();
+
 			$versionedPages->push($versionedPage);
 
 		}

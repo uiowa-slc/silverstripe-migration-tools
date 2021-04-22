@@ -37,7 +37,7 @@
 
     <% loop $Authors %>
 
-        <wp:author><wp:author_id>$ID</wp:author_id><wp:author_login><![CDATA[$Email]]></wp:author_login><wp:author_email><![CDATA[$Email]]></wp:author_email><wp:author_display_name><![CDATA[$Email]]></wp:author_display_name><wp:author_first_name><![CDATA[$FirstName]]></wp:author_first_name><wp:author_last_name><![CDATA[$Surname]]></wp:author_last_name></wp:author>
+        <wp:author><wp:author_id>$ID</wp:author_id><wp:author_login><![CDATA[$AdUsername]]></wp:author_login><wp:author_email><![CDATA[$Email]]></wp:author_email><wp:author_display_name><![CDATA[$AdUsername]]></wp:author_display_name><wp:author_first_name><![CDATA[$FirstName]]></wp:author_first_name><wp:author_last_name><![CDATA[$Surname]]></wp:author_last_name></wp:author>
 
     <% end_loop %>
 
@@ -86,7 +86,7 @@
         <% else %>
            <pubDate>$LastEdited</pubDate>
         <% end_if %>
-        <dc:creator><![CDATA[$Author.Email]]></dc:creator>
+        <dc:creator><![CDATA[$Author.AdUsername]]></dc:creator>
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
         <content:encoded><![CDATA[$Content.RAW]]></content:encoded>
