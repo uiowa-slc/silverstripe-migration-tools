@@ -84,20 +84,25 @@ font-size: 0.9em;
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h1>SiteTree Reviewer</h1>
+            <div class="col-lg-12 pt-4">
+                <nav aria-label="breadcrumb">
+<%--   <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-tree"></i> SiteTree Reviewer</li>
+  </ol> --%>
+</nav>
+                <h1><i class="fas fa-tree"></i> SiteTree Reviewer</h1>
                 <div class="btn-group mb-2" role="group" aria-label="">
                     <a href="siteTreeReviewer/csvExport" class="btn btn-outline-primary"><i class="fas fa-file-csv"> Export to CSV </i></a>
                     <a href="wxrExport/" class="btn btn-outline-secondary"><i class="far fa-file-archive"></i> Export to WordPress XML </a>
                 </div>
                 <p>Exported CSV files use the <a href="https://iowa-my.sharepoint.com/:x:/g/personal/bosto_uiowa_edu/Eb0r95BQ86tMlQvisrBBOeoBPiGNgYpGNIN6pcOxYsFr_A?e=6YMVFN" target="blank">Content Inventory spreadsheet template</a> columns.</a></p>
-                <div class="form-check form-switch d-inline-block">
+<%--                 <div class="form-check form-switch d-inline-block">
                     <input class="form-check-input" type="checkbox" id="showEditLinksSwitch" onchange="doSwapEditLinks(this)">
-                    <label class="form-check-label" for="showEditLinksSwitch">Show Edit Links</label>
+                    <label class="form-check-label" for="showEditLinksSwitch">Hide Edit Links</label>
                 </div>
-<%--                 <div class="form-check form-switch d-inline-block" style="margin-left: 20px;">
-                    <input class="form-check-input" type="checkbox" id="showAdvLinksSwitch" onchange="doSwapAdvLinks(this)">
-                    <label class="form-check-label" for="showAdvLinksSwitch">Show Advanced Info Links</label>
+                <div class="form-check form-switch d-inline-block" style="margin-left: 20px;">
+                    <input class="form-check-input" type="checkbox" id="showAdvLinksSwitch" onchange="doSwapAdvLinks(this)" >
+                    <label class="form-check-label" for="showAdvLinksSwitch">Hide Page Inspector Links</label>
                 </div> --%>
                 <hr />
             </div>
@@ -118,8 +123,8 @@ font-size: 0.9em;
                     </ul>
                 </div>
             </div>
-            <div class="d-none d-lg-block col-lg-7 offset-lg-1">
-                <iframe class="vh-100 border border-secondary" name="site-tree-menu-item" src="{$absoluteBaseURL}" height="400" width="100%" style="background-color: #eee" />
+            <div class="col-lg-7 offset-lg-1">
+                <iframe class="vh-100 border-none" name="site-tree-menu-item" src="siteTreeReviewer/pageInspectorInterstitalView/home" height="400" width="100%" style="border: 1px solid #ccc; background-color: #eee" />
             </div>
         </div>
     </div>

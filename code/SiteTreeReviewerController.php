@@ -1,21 +1,34 @@
 <?php
 
+use SilverStripe\Assets\Image;
 use SilverStripe\CMS\Controllers\ContentController;
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\Security\Permission;
+use SilverStripe\View\ArrayData;
+use Thunder\Shortcode\Parser\RegularParser;
 
 class SiteTreeReviewerController extends ContentController {
 
 	private static $url_handlers = [
 		'siteTreeReviewer/$@' => 'index',
 		'csvExport/$@' => 'csvExport',
+		'pageInspector//$ID' => 'pageInspector',
+		'pageInspectorInterstital/edit//$ID' => 'pageInspectorInterstitalEdit',
+		'pageInspectorInterstital/view//$ID' => 'pageInspectorInterstitalView',
+		'pageInspectorInterstital/inspect//$ID' => 'pageInspectorInterstitalInspect',
 	];
 
 	private static $allowed_actions = [
 		'index',
 		'csvExport',
+		'pageInspector',
+		'pageInspectorInterstitalEdit',
+		'pageInspectorInterstitalView',
+		'pageInspectorInterstitalInspect',
+
 	];
 
 	public function init() {
@@ -32,6 +45,176 @@ class SiteTreeReviewerController extends ContentController {
 	public function index($request) {
 		$renderedData = $this->renderWith('SiteTreeReviewer');
 		return $renderedData;
+	}
+
+	public function pageInspectorInterstitalEdit() {
+
+		$id = $this->getRequest()->param('ID');
+		$page = SiteTree::get()->filter(array('ID' => $id))->First();
+		$link = 'admin/pages/edit/show/' . $id;
+
+		$data = new ArrayData(array(
+			'Page' => $page,
+			'Link' => $link,
+			'Action' => 'edit',
+		));
+
+		return $this->customise($data)->renderWith('SiteTreeReviewer_pageInspectorInterstital');
+
+	}
+	public function pageInspectorInterstitalView() {
+
+		$id = $this->getRequest()->param('ID');
+
+		if ($id == "home") {
+			$page = SiteTree::get()->filter(array('URLSegment' => 'home'))->First();
+		} else {
+			$page = SiteTree::get()->filter(array('ID' => $id))->First();
+		}
+
+		$link = $page->AbsoluteLink();
+
+		$data = new ArrayData(array(
+			'Page' => $page,
+			'Link' => $link,
+			'Action' => 'view',
+		));
+
+		return $this->customise($data)->renderWith('SiteTreeReviewer_pageInspectorInterstital');
+
+	}
+
+	public function pageInspectorInterstitalInspect() {
+
+		$id = $this->getRequest()->param('ID');
+		$page = SiteTree::get()->filter(array('ID' => $id))->First();
+		$link = 'siteTreeReviewer/pageInspector/' . $id;
+
+		$data = new ArrayData(array(
+			'Page' => $page,
+			'Link' => $link,
+			'Action' => 'inspect',
+		));
+
+		return $this->customise($data)->renderWith('SiteTreeReviewer_pageInspectorInterstital');
+
+	}
+	public function pageInspector() {
+
+		//TODO maybe make an interstitial page with an iframe with "Edit View Inspect" as a tool bar with buttons linking to v
+		// pageInspector/edit/XX pageInspector/view/XX pageInspector/inspect/XX
+
+		$id = $this->getRequest()->param('ID');
+		$page = SiteTree::get()->filter(array('ID' => $id))->First();
+		$imagesAttached = new ArrayList();
+		$imagesInline = new ArrayList();
+		$filesInline = new ArrayList();
+		$blockImages = new ArrayList();
+
+		//TODO GET ATTACHED IMAGES:
+
+		$imageTries = array(
+			'OgImage',
+			'FeaturedImage',
+			'MainImage',
+			'HeaderImage',
+			'Photo',
+			'BackgroundImage',
+		);
+
+		foreach ($imageTries as $t) {
+			$i = $page::getSchema()->hasOneComponent($page, $t);
+			if ($i) {
+				if ($page->getComponent($t)->exists()) {
+
+					$imagesAttached->push($page->getComponent($t));
+				}
+			}
+		}
+
+		$content = $page->Content;
+		//TODO GET INLINE IMAGES
+		$parser = new RegularParser();
+		$parsedShortcodes = $parser->parse($content);
+
+		foreach ($parsedShortcodes as $shortcode) {
+			$name = $shortcode->getName();
+			if ($name == "image") {
+				$params = $shortcode->getParameters();
+				//print_r($params);
+				$id = $params['id'];
+				$image = Image::get()->filter(array('ID' => $id))->First();
+
+				if ($image) {
+					$imagesInline->push($image);
+				}
+
+			}
+
+		}
+		//print_r($parser->parse($content));
+
+		//BLOCK IMAGES:
+
+		$elementRelations = $page->getElementalRelations();
+		$elementAreas = new ArrayList();
+		$elementList = new ArrayList();
+
+		foreach ($elementRelations as $elementRelation) {
+			//print_r($elementRelation . 'ID ');
+			//print_r($page->{$elementRelation} . "ID");
+			$elementAreas->push($page->obj($elementRelation));
+		}
+
+		foreach ($elementAreas as $elementArea) {
+			$elements = $elementArea->Elements();
+
+			foreach ($elements as $element) {
+
+				$elementList->push($element);
+
+				$elementImageTries = array(
+					'Image',
+					'BackgroundImage',
+					'Photo',
+					'FeaturePagePhoto',
+				);
+
+				foreach ($elementImageTries as $elementImageTry) {
+					$i = $element::getSchema()->hasOneComponent($element, $elementImageTry);
+
+					if ($i) {
+						if ($element->getComponent($elementImageTry)->exists()) {
+
+							$blockImages->push($element->getComponent($elementImageTry));
+						}
+					}
+
+				}
+
+			}
+
+		}
+
+		//print_r($elementRelations);
+
+		//TODO GET INLINE FILES
+
+		$versionedPage = $page->VersionsList()->Last();
+		$recentEditor = $versionedPage->Author();
+
+		$data = new ArrayData(array(
+			'Page' => $page,
+			'ImagesAttached' => $imagesAttached,
+			'ImagesInline' => $imagesInline,
+			'FilesInline' => $filesInline,
+			'BlockImages' => $blockImages,
+			'Elements' => $elementList,
+			'RecentEditor' => $recentEditor,
+		));
+
+		return $this->customise($data)->renderWith('SiteTreeReviewer_pageInspector');
+
 	}
 
 	public function csvExport($request) {
