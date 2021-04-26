@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/js/fontawesome.min.js"></script>
+
     <style>
     body {
         font-family: 'Roboto', sans-serif;
@@ -57,6 +58,12 @@
     }
 
     </style>
+<script>
+const codeInput = document.querySelector('#content-text-area');
+
+// initialise the highlighted output with whatever is in the input
+hljs.highlightBlock(codeInput);
+</script>
 </head>
 
 <body>
@@ -261,7 +268,12 @@
                 </pre>
  --%>
 
-                <h2>Content:</h2>
+                <h2>Content HTML:</h2>
+<textarea id="content-text-area" class="text-light bg-dark" style="font-family: monospace; "name="" rows="4" cols="50" readonly>
+$Page.Content.ATT
+$Page.Policies.ATT
+</textarea>
+<h2>Content:</h2>
 <div class="untamed-imgs">
 
  $Page.Content
