@@ -26,9 +26,8 @@
     h4,
     .h4,
     h5,
-    .h5,
-    h6,
-    .h6 {
+    .h5
+    {
         font-family: 'Zilla Slab', serif;
     }
 
@@ -53,6 +52,7 @@
     .untamed-imgs img{
         display: block;
         width: 100%;
+        height: 100%;
 
     }
 
@@ -64,34 +64,32 @@
         <div class="row">
             <div class="col-lg-12 pt-4">
                 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-<%--     <li class="breadcrumb-item"><a href="siteTreeReviewer/"><i class="fas fa-tree"></i> SiteTree Reviewer</a></li> --%>
-    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-info-circle"></i> Page Inspector</li>
-    <li class="breadcrumb-item"><a href="siteTreeReviewer/pageInspector/{$Page.ID}" target="_blank" rel="noopener"> Open inspector in a new tab <i class="fas fa-external-link-alt"></i></a></li>
-  </ol>
-</nav>
+                  <ol class="breadcrumb">
+                <%--     <li class="breadcrumb-item"><a href="siteTreeReviewer/"><i class="fas fa-tree"></i> SiteTree Reviewer</a></li> --%>
+                    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-info-circle"></i> Page Inspector</li>
+                    <li class="breadcrumb-item"><a href="siteTreeReviewer/pageInspector/{$Page.ID}" target="_blank" rel="noopener"> Open inspector in a new tab <i class="fas fa-external-link-alt"></i></a></li>
+                  </ol>
+                </nav>
                 <h1>$Page.Title <small>($Page.ClassName)</small></h1>
 
+
                 <p>URL: <a href="$Page.AbsoluteLink" target="_blank" rel="noopener">$Page.AbsoluteLink <i class="fas fa-external-link-alt"></i></a>
-                    <br />
+               <%--      <br />
 
-                    Site: <a href="$BaseURL">$SiteConfig.Title <i class="fas fa-external-link-alt"></i></a><br />
-                    Last edited by: <a href="mailto:$RecentEditor.Email">$RecentEditor.FirstName $RecentEditor.LastName</a>
+                    Site: <a href="$BaseURL">$SiteConfig.Title <i class="fas fa-external-link-alt"></i></a><br /> --%>
                 </p>
-                  <small>
-                <p>         <a href="admin/pages/edit/show/{$Page.ID}" class="" target="_blank"><i class="far fa-edit"></i> Edit this page in SilverStripe</a></p>
-                <p>              <% if $Page.NextPage %>Next page: <a href="siteTreeReviewer/pageInspector/{$Page.NextPage.ID}" >$Page.NextPage.Title</a><% if $Page.PreviousPage %><br /><% end_if %><% end_if %>
-
-                    <% if $Page.PreviousPage %>Previous page: <a href="siteTreeReviewer/pageInspector/{$Page.PreviousPage.ID}">$Page.PreviousPage.Title</a>
-                    <% end_if %>
 
 
 
+
+                  <p>Last edited by: <a href="mailto:$RecentEditor.Email">$RecentEditor.FirstName $RecentEditor.LastName</a><br />
+                    Linked files: <% if $FilesInline%><% loop $FilesInline %><a href="$AbsoluteURL" />$Filename</a><% if not $Last %>, <% end_if %><% end_loop %><% else %> No inline files detected.<% end_if %>
                 </p>
-                <% if $Page.getAllChildren %>
-                    <p>Child Page: <a href="siteTreeReviewer/pageInspector/{$Page.AllChildren.First.ID}" >$Page.AllChildren.First.Title</a></p>
-                <% end_if %>
-            </small>
+
+
+
+
+
                  <hr />
              </div>
 
@@ -100,25 +98,110 @@
          <div class="row">
 
             <div class="col-lg-7">
+                <% with $Page %>
 
+                <% if $SubHeading || $ButtonUrlOne || $ButtonUrlTwo || $ButtonUrlThree %>
+                           <h2>Hero Subheading + Buttons</h2>
+                <div class="bg-dark text-light p-4">
+                    <% if $HeroVideo %>
+                    <p>Background video: <a class="text-light" href="$HeroVideo.AbsoluteURL">$HeroVideo.AbsoluteURL</a></p>
 
-                <div class="py-2">
-                <h2>Inline files:</h2>
+                    <% end_if %>
 
-                <% if $FilesAttached %>
-                 <div class="row">
-                <% loop $FilesAttached %>
-                    <div class="col-lg-4">
-                        <a href="$AbsoluteURL" />$Filename</a>
-                    </div>
-                <% end_loop %>
+                    <% if $HeroImage %>
+                    <p>Background image: <a class="text-light" href="$HeroImage.AbsoluteURL">$HeroImage.AbsoluteURL</a></p>
+                    <% end_if %>
+                    <% if $SubHeading %>
+
+                        <p class="h2  text-center"><strong>$SubHeading</strong></p>
+                    <% end_if %>
+                    <p class="text-center text-light">
+                    <% if $ButtonUrlOne %>
+                        <a href="$ButtonUrlOne" class="btn btn-primary">$ButtonTextOne <i class="fas fa-arrow-right"></i></a>
+                    <% end_if %>
+                    <% if $ButtonUrlTwo %>
+                        <a href="$ButtonUrlTwo" class="btn btn-primary">$ButtonTextTwo <i class="fas fa-arrow-right"></i></a>
+                    <% end_if %>
+                    <% if $ButtonUrlThree %>
+                        <a href="$ButtonUrlThree" class="btn btn-primary">$ButtonTextThree <i class="fas fa-arrow-right"></i></a>
+                    <% end_if %>
+                </p>
                 </div>
+                <% end_if %>
+                 <% end_with %>
+                <% if $Page.ClassName == "HomePage" %>
 
-                <% else %>
-                    <p>No inline files detected.</p>
+                    <% if $NewHomePageHeroFeatures %>
+                        <h2>Homepage Media Slides:</h2>
+
+                        <% loop $NewHomePageHeroFeatures %>
+                         <div class="py-2 untamed-imgs">
+                            <% if $Image %>
+                                $Image
+                            <% end_if %>
+                                <h3>$Title</h3>
+                                $Content
+                                <% if $ButtonText %>
+                                    <% if $ExternalLink %>
+                                        <a href="$ExternalLink" target="_blank" class="button warning">$ButtonText <i class="fas fa-arrow-right"></i></a>
+                                    <% else %>
+                                        <a href="$AssociatedPage.Link" class="button warning">$ButtonText <i class="fas fa-arrow-right"></i></a>
+                                    <% end_if %>
+                                <% end_if  %>
+                                <hr />
+                                     </div>
+                        <% end_loop %>
+                    <% end_if %>
 
                 <% end_if %>
+
+
                 </div>
+                <% with $Page %>
+                <% if $ClassName == "StaffPage" %>
+
+                    <h2>$Position</h2>
+                    <ul>
+                        <% if $DisplayPronouns && $Pronouns || $OtherPronouns %>
+                            <li>
+                                <strong>Pronouns:</strong>
+
+                                <ul>
+                                <% loop $Pronouns %>
+                                    <li>$Pronoun</li>
+                                <% end_loop %>
+                                <% if $OtherPronouns%>
+                                    <li>$OtherPronouns</li>
+                                <% end_if %>
+                                </ul>
+                            </li>
+                        <% end_if %>
+                        <% if $EmailAddress %><li><strong>Email:</strong> <a href="mailto:$EmailAddress">$EmailAddress</a></li><% end_if %>
+                        <% if $Phone %><li><strong>Phone:</strong> $Phone</li><% end_if %>
+                        <% if $DepartmentName %>
+                            <li>
+                                <% if $DepartmentURL %>
+                                    <a href="$DepartmentURL" target="_blank">Department website</a>
+                                <% else %>
+                                    $DepartmentName
+                                <% end_if %>
+                            </li>
+                        <% end_if %>
+                        <% if $OtherWebsiteLink %>
+                            <li><a href="$OtherWebsiteLink" target="_blank">
+                                <% if $OtherWebsiteLabel %>
+                                    $OtherWebsiteLabel
+                                <% else %>
+                                    Website
+                                <% end_if %>
+                            </a></li>
+                        <% end_if %>
+                    </ul>
+
+
+
+                <% end_if %>
+                <% end_with %>
                 <div class="py-2">
                 <h2>Images attached (upload fields):</h2>
 
@@ -179,16 +262,17 @@
  --%>
 
                 <h2>Content:</h2>
-
+<div class="untamed-imgs">
 
  $Page.Content
  $Page.Policies
+</div>
                 <hr />
             </div>
 
 
 
-            <div class="col-lg-4 untamed-imgs">
+            <div class="col-lg-4">
                     <h2>Blocks: </h2>
                     <% if $Elements %>
                     <% loop $Elements %>

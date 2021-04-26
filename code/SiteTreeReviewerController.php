@@ -1,5 +1,6 @@
 <?php
 
+use SilverStripe\Assets\File;
 use SilverStripe\Assets\Image;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\CMS\Model\SiteTree;
@@ -110,6 +111,12 @@ class SiteTreeReviewerController extends ContentController {
 		$imagesInline = new ArrayList();
 		$filesInline = new ArrayList();
 		$blockImages = new ArrayList();
+		$homePageHeroFeatures = new ArrayList();
+
+		if (class_exists('NewHomePageHeroFeature')) {
+
+			$homePageHeroFeatures = NewHomePageHeroFeature::get();
+		}
 
 		//TODO GET ATTACHED IMAGES:
 
@@ -120,6 +127,7 @@ class SiteTreeReviewerController extends ContentController {
 			'HeaderImage',
 			'Photo',
 			'BackgroundImage',
+			'HeroImage',
 		);
 
 		foreach ($imageTries as $t) {
@@ -178,6 +186,7 @@ class SiteTreeReviewerController extends ContentController {
 					'BackgroundImage',
 					'Photo',
 					'FeaturePagePhoto',
+
 				);
 
 				foreach ($elementImageTries as $elementImageTry) {
@@ -200,6 +209,20 @@ class SiteTreeReviewerController extends ContentController {
 
 		//TODO GET INLINE FILES
 
+		preg_match_all("[file_link,id=([0-9]+)]", $content, $findFile);
+
+		if (isset($findFile[1])) {
+			foreach ($findFile[1] as $foundFile) {
+				$fileCheck = File::get()->filter(array('ID' => $foundFile))->First();
+
+				if ($fileCheck) {
+					$filesInline->push($fileCheck);
+				}
+			}
+		}
+
+		//Get latest editor:
+
 		$versionedPage = $page->VersionsList()->Last();
 		$recentEditor = $versionedPage->Author();
 
@@ -211,6 +234,7 @@ class SiteTreeReviewerController extends ContentController {
 			'BlockImages' => $blockImages,
 			'Elements' => $elementList,
 			'RecentEditor' => $recentEditor,
+			'NewHomePageHeroFeatures' => $homePageHeroFeatures,
 		));
 
 		return $this->customise($data)->renderWith('SiteTreeReviewer_pageInspector');
