@@ -72,10 +72,13 @@ class WxrExportController extends ContentController {
 
 		$tagsCats = array_merge($tagsArray, $catsArray);
 
-		$pageExcludes = [
-
-		];
-		$pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage');
+		// $pageExcludes = [
+		//     'ClassName:PartialMatch:not' => 'ErrorPage',
+		//     'ClassName:PartialMatch:not' => 'StaffPage',
+		//     'ClassName:PartialMatch:not' => 'HomePage',
+		//     'ClassName:PartialMatch:not' => 'UtilityPage',
+		// ];
+		$pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'StaffPage')->exclude('ClassName:PartialMatch', 'HomePage');
 		// print_r($pages->toArray());
 		foreach ($pages as $page) {
 			$versionedPage = $page->VersionsList()->Last();
