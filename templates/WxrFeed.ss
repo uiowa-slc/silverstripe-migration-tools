@@ -89,7 +89,7 @@
         <dc:creator><![CDATA[$Author.AdUsername]]></dc:creator>
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
-        <content:encoded><![CDATA[$Content.RAW]]></content:encoded>
+        <content:encoded><![CDATA[$Content.RAW]]><![CDATA[$Policies.RAW]]></content:encoded>
         <excerpt:encoded><![CDATA[$MetaDescription]]></excerpt:encoded>
         <wp:post_id>$ID</wp:post_id>
 <%--         <wp:post_date><![CDATA[2021-02-18 20:29:19]]></wp:post_date> --%>

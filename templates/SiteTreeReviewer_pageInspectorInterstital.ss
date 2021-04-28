@@ -66,10 +66,10 @@
 
                 <div style="position: relative;">
                 <div class="py-2 btn-group text-center" role="group" aria-label="Toolbar" style="">
-                <a href="siteTreeReviewer/pageInspectorInterstitalView/{$Page.ID}" class="btn btn-primary <% if $Action == "view" %>active<% end_if %>"><i class="fas fa-globe"></i> View</a>
+                <a href="siteTreeReviewer/pageInspectorInterstitalInspect/{$Page.ID}" class="btn btn-primary <% if $Action == "inspect" %>active<% end_if %>"><i class="fas fa-info-circle"></i> Inspect</a>
                   <a href="siteTreeReviewer/pageInspectorInterstitalEdit/{$Page.ID}"  class="btn btn-primary <% if $Action == "edit" %>active<% end_if %>"><i class="far fa-edit"></i> Edit</a>
 
-                  <a href="siteTreeReviewer/pageInspectorInterstitalInspect/{$Page.ID}" class="btn btn-primary <% if $Action == "inspect" %>active<% end_if %>"><i class="fas fa-info-circle"></i> Inspect</a>
+                  <a href="siteTreeReviewer/pageInspectorInterstitalView/{$Page.ID}" class="btn btn-primary <% if $Action == "view" %>active<% end_if %>"><i class="fas fa-globe"></i> View</a>
                 </div>
                     <iframe class="vh-100 border-none" name="site-tree-menu-item" src="{$Link}" height="400" width="100%" style="background-color: #eee" />
                 </div>

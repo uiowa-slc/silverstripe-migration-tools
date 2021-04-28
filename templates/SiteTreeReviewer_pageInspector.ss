@@ -269,22 +269,67 @@ hljs.highlightBlock(codeInput);
  --%>
 
                 <h2>Content HTML:</h2>
-<textarea id="content-text-area" class="text-light bg-dark" style="font-family: monospace; "name="" rows="4" cols="50" readonly>
+<textarea onclick="this.focus();this.select()" id="content-text-area" class="text-light bg-dark" style="font-family: monospace; "name="" rows="4" cols="50" readonly>
 $Page.Content.ATT
 $Page.Policies.ATT
 </textarea>
 <h2>Content:</h2>
 <div class="untamed-imgs">
 
- $Page.Content
- $Page.Policies
+<% with $Page %>
+ $Content
+ $Policies
+                <% if $Teams %>
+                <h3>Staff / Person Pages</h3>
+                    <% loop $Teams %>
+                        <h4 class="stafflist__title">$Title</h4>
+                        <ul>
+                            <% loop $SortedStaffPages %>
+                                <li>
+
+                                    <h5>$FullName</h5>
+                                    <p><img src="$Photo.URL" /></p>
+                                    <p>
+                                        <% if $Position %><em class="stafflist__position">$Position</em>
+                                        <% end_if %>
+                                    </p>
+                                </li>
+                                $Content
+                            <% end_loop %>
+
+                        </ul>
+                    <% end_loop %>
+                <% else %><%-- end if teams --%>
+                    <ul>
+                        <% loop $Children %>
+                            <li>
+                                <h5>$FullName</h5>
+                                <p><img src="$Photo.URL" /></p>
+
+                                    <p>
+                                        <% if $Position %><em class="stafflist__position">$Position</em>
+                                        <% end_if %>
+                                    </p>
+                            </li>
+                        <% end_loop %>
+                    </ul>
+                <% end_if %>
+
+
+<% end_with %>
+
+
+
+
+
+
 </div>
                 <hr />
             </div>
 
 
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 untamed-imgs">
                     <h2>Blocks: </h2>
                     <% if $Elements %>
                     <% loop $Elements %>

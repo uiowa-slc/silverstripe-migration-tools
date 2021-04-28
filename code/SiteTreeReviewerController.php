@@ -88,7 +88,11 @@ class SiteTreeReviewerController extends ContentController {
 	public function pageInspectorInterstitalInspect() {
 
 		$id = $this->getRequest()->param('ID');
-		$page = SiteTree::get()->filter(array('ID' => $id))->First();
+		if ($id == "home") {
+			$page = SiteTree::get()->filter(array('URLSegment' => 'home'))->First();
+		} else {
+			$page = SiteTree::get()->filter(array('ID' => $id))->First();
+		}
 		$link = 'siteTreeReviewer/pageInspector/' . $id;
 
 		$data = new ArrayData(array(
@@ -106,7 +110,11 @@ class SiteTreeReviewerController extends ContentController {
 		// pageInspector/edit/XX pageInspector/view/XX pageInspector/inspect/XX
 
 		$id = $this->getRequest()->param('ID');
-		$page = SiteTree::get()->filter(array('ID' => $id))->First();
+		if ($id == "home") {
+			$page = SiteTree::get()->filter(array('URLSegment' => 'home'))->First();
+		} else {
+			$page = SiteTree::get()->filter(array('ID' => $id))->First();
+		}
 		$imagesAttached = new ArrayList();
 		$imagesInline = new ArrayList();
 		$filesInline = new ArrayList();
