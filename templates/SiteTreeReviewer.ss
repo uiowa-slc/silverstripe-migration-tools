@@ -7,7 +7,10 @@
     <title>SiteTree Reviewer - $SiteConfig.Title</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto Condensed:regular,bold|Roboto:light,regular,bold,italic|Zilla Slab:regular,bold,italic" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/js/fontawesome.min.js"></script>
 
     <style>
@@ -64,6 +67,30 @@ font-size: 0.9em;
                     <a href="wxrExport/" class="btn btn-outline-secondary"><i class="far fa-file-archive"></i> Export to WordPress XML </a>
                 </div>
                 <p>Exported CSV files use the <a href="https://iowa-my.sharepoint.com/:x:/g/personal/bosto_uiowa_edu/Eb0r95BQ86tMlQvisrBBOeoBPiGNgYpGNIN6pcOxYsFr_A?e=6YMVFN" target="blank">Content Inventory spreadsheet template</a> columns.</a></p>
+                <p>    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#recentEdits" aria-expanded="false" aria-controls="collapseExample">
+    See recently edited pages <i class="fas fa-plus"></i>
+  </button>
+</p>
+<div class="collapse" id="recentEdits">
+  <div class="card card-body">
+    <table class="table">
+        <tr>
+            <th>Page</th>
+            <th>Last edited</th>
+            <th>Last edited by</th>
+        </tr>
+
+        <% loop RecentlyEditedPages.Sort(LastEdited DESC) %>
+          <tr>
+        <td><a href="$Link" target="_blank" rel="noopener">$Link</a></td>
+        <td>$LastEdited</td>
+        <td>$Author.FirstName $Author.Surname</td>
+         </tr>
+        <% end_loop %>
+
+    </table>
+  </div>
+</div>
                 <hr />
             </div>
         </div>
@@ -75,6 +102,8 @@ font-size: 0.9em;
                     <% end_if %>
                     <% end_loop %>
                 </p>
+                <p>Google Analytics ID: $SiteConfig.GoogleAnalyticsID </p>
+
                 <div class="sitetree-container">
                     <ul>
                         <% loop $Menu(1) %>

@@ -361,7 +361,17 @@ class SiteTreeReviewerController extends ContentController {
 		return $authors;
 
 	}
+	public function RecentlyEditedPages() {
 
+		$recentPages = Page::get()->sort(array('LastEdited DESC'))->Limit(20);
+		$versionedPageList = new ArrayList();
+
+		foreach ($recentPages as $page) {
+			$versionedPageList->push($page->VersionsList()->Last());
+		}
+		return $versionedPageList;
+
+	}
 	private function checkForAttachedFiles($page) {
 		$content = $page->Content;
 		$pos = strpos($content, '[file_link');
