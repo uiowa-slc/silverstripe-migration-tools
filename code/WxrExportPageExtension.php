@@ -4,6 +4,7 @@ use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Parsers\ShortcodeParser;
 
+
 class WxrExportPageExtension extends DataExtension {
 
 
@@ -24,7 +25,7 @@ class WxrExportPageExtension extends DataExtension {
         $domain = $_SERVER['HTTP_HOST'];
 
         $contentFiltered = $parser->parse($content);
-        $contentFiltered = str_replace('href="assets/', 'href="sites/'.$domain.'/files/imports/', $contentFiltered);
+        $contentFiltered = str_replace('href="/assets/', 'href="sites/'.$domain.'/files/imports/', $contentFiltered);
 
         return $contentFiltered;
 

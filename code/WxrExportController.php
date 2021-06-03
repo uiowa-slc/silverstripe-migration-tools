@@ -12,6 +12,7 @@ use SilverStripe\Security\Permission;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Parsers\URLSegmentFilter;
 use SilverStripe\Core\Environment;
+use SilverStripe\Control\HTTPRequest;
 
 class WxrExportController extends ContentController {
 
@@ -107,7 +108,9 @@ class WxrExportController extends ContentController {
 		$dom->formatOutput = true;
 		$dom->loadXML($xml->asXML());
 
-        if(Environment::getEnv('SS_ENVIRONMENT_TYPE') == "dev"){
+        $getVars = $request->getVars();
+
+        if(isset($getVars["view"])){
             header('Content-type: text/xml');
         }else{
             header('Content-Disposition: attachment; filename="' . $filename . '"');
