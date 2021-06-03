@@ -11,6 +11,7 @@ use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Parsers\URLSegmentFilter;
+use SilverStripe\Core\Environment;
 
 class WxrExportController extends ContentController {
 
@@ -105,9 +106,12 @@ class WxrExportController extends ContentController {
 		$dom->preserveWhiteSpace = false;
 		$dom->formatOutput = true;
 		$dom->loadXML($xml->asXML());
-        header('Content-Type: text/xml');
-		// header('Content-type: text/xml');
-		// header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+        if(Environment::getEnv('SS_ENVIRONMENT_TYPE') == "dev"){
+            header('Content-type: text/xml');
+        }else{
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+        }
 
 		print($dom->saveXML());
 
