@@ -6,3 +6,6 @@ After:
 SilverStripe\Admin\LeftAndMain:
   extensions:
     - SiteTreeReviewerCustomLinkExtension
+Page:
+  extensions:
+    - WxrExportPageExtension

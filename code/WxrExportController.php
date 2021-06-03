@@ -105,9 +105,9 @@ class WxrExportController extends ContentController {
 		$dom->preserveWhiteSpace = false;
 		$dom->formatOutput = true;
 		$dom->loadXML($xml->asXML());
-
-		header('Content-type: text/xml');
-		header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Type: text/xml');
+		// header('Content-type: text/xml');
+		// header('Content-Disposition: attachment; filename="' . $filename . '"');
 
 		print($dom->saveXML());
 
