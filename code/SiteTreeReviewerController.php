@@ -172,7 +172,11 @@ class SiteTreeReviewerController extends ContentController {
 
 		//BLOCK IMAGES:
 
-		$elementRelations = $page->getElementalRelations();
+		$elementRelations = new ArrayList();
+		if (class_exists('DNADesign\Elemental\Extensions\ElementalAreasExtension')) {
+			$elementRelations = $page->getElementalRelations();
+		}
+		
 		$elementAreas = new ArrayList();
 		$elementList = new ArrayList();
 
