@@ -13,7 +13,9 @@ use SilverStripe\View\ArrayData;
 use SilverStripe\View\Parsers\URLSegmentFilter;
 use SilverStripe\Core\Environment;
 use SilverStripe\Control\HTTPRequest;
-
+use SilverStripe\ORM\FieldType\DBInt;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Versioned\Versioned;
 class WxrExportController extends ContentController {
 
 	private static $url_handlers = [
@@ -80,12 +82,39 @@ class WxrExportController extends ContentController {
 		//     'ClassName:PartialMatch:not' => 'HomePage',
 		//     'ClassName:PartialMatch:not' => 'UtilityPage',
 		// ];
-		$pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'StaffPage')->exclude('ClassName:PartialMatch', 'HomePage');
+		$pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'HomePage');
 		// print_r($pages->toArray());
 		foreach ($pages as $page) {
-			$versionedPage = $page->VersionsList()->Last();
-
+			//$versionedPage = $page->VersionsList()->sort('Version DESC')->First();
+			$versionedPageId = Versioned::get_versionnumber_by_stage(get_class($page), 'Live', $page->ID);
+			$versionedPage = $page->VersionsList()->filter(array('Version' => $versionedPageId))->First();
 			$versionedPages->push($versionedPage);
+
+		}
+
+		$attachments = new ArrayList();
+
+		foreach($versionedPages as $page){
+			$pageImage = $page->ImageLookup();
+
+
+			// $postId = new DBInt();
+			// $postId->setValue($page->ID);
+			// $pageImage->PostID = $postId;
+
+			if($pageImage){
+
+				$proxyObject = new DataObject();
+				$postId = new DBInt();
+				$postId->setValue($page->ID);
+				$proxyObject->PostID = $postId;
+				$proxyObject->Title = $pageImage->Title;
+				$proxyObject->AbsoluteURL = $pageImage->AbsoluteURL;
+				$proxyObject->Alt = $pageImage->Title;
+				$proxyObject->Created = $pageImage->Created;
+				$attachments->push($proxyObject);
+			}
+
 
 		}
 
@@ -94,6 +123,7 @@ class WxrExportController extends ContentController {
 		$templateData = new ArrayData([
 			'Authors' => $authors,
 			'Pages' => $versionedPages,
+			'Attachments' => $attachments,
 			'Tags' => $tags,
 			'Categories' => $cats,
 			'TagsCats' => $tagsCats,

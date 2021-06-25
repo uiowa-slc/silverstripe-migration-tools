@@ -32,5 +32,39 @@ class WxrExportPageExtension extends DataExtension {
 
     }
 
+    public function ImageLookup(){
+        $page = $this->owner->data();
+
+        $tries = array(
+
+            'FeaturedImage',
+            'MainImage',
+            'HeaderImage',
+            'Photo',
+            'BackgroundImage',
+            'HeroImage',
+            'MainPhoto',
+            'ProgramPhoto',
+            'Image',
+            'StaffPhoto'
+
+        );
+
+        //Try the above image fields
+        foreach($tries as $t) {
+            // echo $t;
+            $i = $page::getSchema()->hasOneComponent($page, $t);
+            // echo $i;
+            if($i) {
+                if($page->getComponent($t)->exists()){
+                    // echo 'component exists: '.$i;
+                    return $page->getComponent($t);
+                }
+            }
+        }
+
+
+    }
+
 
 }

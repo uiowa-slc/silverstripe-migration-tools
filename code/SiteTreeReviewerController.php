@@ -136,6 +136,9 @@ class SiteTreeReviewerController extends ContentController {
 			'Photo',
 			'BackgroundImage',
 			'HeroImage',
+			'MainPhoto',
+			'ProgramPhoto',
+			'Image'
 		);
 
 		foreach ($imageTries as $t) {

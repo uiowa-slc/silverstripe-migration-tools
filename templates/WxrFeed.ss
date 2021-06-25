@@ -89,10 +89,10 @@
         <dc:creator><![CDATA[$Author.AdUsername]]></dc:creator>
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
-        <content:encoded><![CDATA[$ContentWxrFiltered.RAW]]><![CDATA[$Policies.RAW]]></content:encoded>
+        <content:encoded><![CDATA[$ContentWxrFiltered.RAW]]><![CDATA[$Policies.RAW]]><![CDATA[$StaffResearch.RAW]]></content:encoded>
         <excerpt:encoded><% if $MetaDescription %><![CDATA[$MetaDescription]]><% else %><![CDATA[$Content.Summary.RAW]]><% end_if %></excerpt:encoded>
         <wp:post_id>$ID</wp:post_id>
-<%--         <wp:post_date><![CDATA[2021-02-18 20:29:19]]></wp:post_date> --%>
+
         <wp:post_date><![CDATA[$Created]]></wp:post_date>
         <wp:post_date_gmt><![CDATA[$Created]]></wp:post_date_gmt>
         <wp:comment_status><![CDATA[open]]></wp:comment_status>
@@ -105,6 +105,15 @@
             <wp:post_type><![CDATA[post]]></wp:post_type>
         <% else_if $ClassName == "Topic" %>
             <wp:post_type><![CDATA[post]]></wp:post_type>
+        <% else_if $ClassName == "StaffPage" %>
+            <wp:post_type><![CDATA[staffpage]]></wp:post_type>
+        <% else_if $ClassName == "StaffMember" %>
+            <wp:post_type><![CDATA[staffmembercustom]]></wp:post_type>
+            <firstname>$FirstName</firstname>
+            <lastname>$Surname</lastname>
+            <phone>$StaffPhoneNumber</phone>
+            <email>$StaffEmailAddress</email>
+            <position>$StaffPosition</position>
         <% else %>
             <wp:post_type><![CDATA[page]]></wp:post_type>
         <% end_if %>
@@ -112,17 +121,15 @@
         <wp:post_password><![CDATA[]]></wp:post_password>
         <wp:is_sticky>0</wp:is_sticky>
 
-        <% if $FeaturedImage %>
-             <wp:attachment_url><![CDATA[$FeaturedImage.AbsoluteURL]]></wp:attachment_url>
+        <% if $ImageLookup %>
+             <wp:attachment_url><![CDATA[$ImageLookup.AbsoluteURL]]></wp:attachment_url>
                                                         <wp:postmeta>
                     <wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key>
-                    <wp:meta_value><![CDATA[$FeaturedImage.AbsoluteURL]]></wp:meta_value>
+                    <wp:meta_value><![CDATA[$ImageLookup.AbsoluteURL]]></wp:meta_value>
                     </wp:postmeta>
                                         <wp:postmeta>
                     <wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key>
-                    <wp:meta_value><![CDATA[a:5:{s:5:"width";i:$FeaturedImage.Width;s:6:"height";i:$FeaturedImage.Height;s:4:"file";s:26:"$URL";a:0:{}}]]></wp:meta_value>
-<%--                     <wp:meta_value><![CDATA[a:5:{s:5:"width";i:$FeaturedImage.Width;s:6:"height";i:$FeaturedImage.Height;s:4:"file";s:26:"$URL";s:5:"sizes";a:6:{s:6:"medium";a:4:{s:4:"file";s:25:"order-of-omega-300x94.png";s:5:"width";i:300;s:6:"height";i:94;s:9:"mime-type";s:9:"image/png";}s:5:"large";a:4:{s:4:"file";s:27:"order-of-omega-1024x320.png";s:5:"width";i:1024;s:6:"height";i:320;s:9:"mime-type";s:9:"image/png";}s:9:"thumbnail";a:4:{s:4:"file";s:26:"order-of-omega-150x150.png";s:5:"width";i:150;s:6:"height";i:150;s:9:"mime-type";s:9:"image/png";}s:12:"medium_large";a:4:{s:4:"file";s:26:"order-of-omega-768x240.png";s:5:"width";i:768;s:6:"height";i:240;s:9:"mime-type";s:9:"image/png";}s:9:"1536x1536";a:4:{s:4:"file";s:27:"order-of-omega-1536x480.png";s:5:"width";i:1536;s:6:"height";i:480;s:9:"mime-type";s:9:"image/png";}s:14:"post-thumbnail";a:4:{s:4:"file";s:27:"order-of-omega-1568x490.png";s:5:"width";i:1568;s:6:"height";i:490;s:9:"mime-type";s:9:"image/png";}}s:10:"image_meta";a:12:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";s:11:"orientation";s:1:"0";s:8:"keywords";a:0:{}}}]]></wp:meta_value>
-                    --%>
+                    <wp:meta_value><![CDATA[a:5:{s:5:"width";i:$ImageLookup.Width;s:6:"height";i:$ImageLookup.Height;s:4:"file";s:26:"$URL";a:0:{}}]]></wp:meta_value>
                     </wp:postmeta>
         <% end_if %>
         <% if $Categories %>
@@ -137,6 +144,17 @@
         <% end_if %>
 
         </item>
+
+<% end_loop %>
+
+<% loop $Attachments %>
+    <item>
+        <wp:post_type><![CDATA[attachment]]></wp:post_type>
+        <title>$Alt</title>
+        <wp:post_id>$PostID</wp:post_id>
+        <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
+        <pubDate>$Created</pubDate>
+    </item>
 
 <% end_loop %>
 
