@@ -109,7 +109,7 @@ class WxrExportController extends ContentController {
 				$postId->setValue($page->ID);
 				$proxyObject->PostID = $postId;
 				$proxyObject->Title = $pageImage->Title;
-				$proxyObject->AbsoluteURL = $pageImage->AbsoluteURL;
+				$proxyObject->AbsoluteURL = $pageImage->FitMax(2592,1458)->getAbsoluteURL();
 				$proxyObject->Alt = $pageImage->Title;
 				$proxyObject->Created = $pageImage->Created;
 				$attachments->push($proxyObject);
