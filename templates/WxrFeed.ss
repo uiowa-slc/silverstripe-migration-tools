@@ -123,7 +123,7 @@
         <wp:post_password><![CDATA[]]></wp:post_password>
         <wp:is_sticky>0</wp:is_sticky>
 
-        <% if $ImageLookup %>
+<%--         <% if $ImageLookup %>
              <wp:attachment_url><![CDATA[$ImageLookup.FitMax(2592,1458).AbsoluteURL]]></wp:attachment_url>
                                                         <wp:postmeta>
                     <wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key>
@@ -133,7 +133,7 @@
                     <wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key>
                     <wp:meta_value><![CDATA[a:5:{s:5:"width";i:$$ImageLookup.FitMax(2592,1458).Width;s:6:"height";i:$ImageLookup.FitMax(2592,1458).Height;s:4:"file";s:26:"$URL";a:0:{}}]]></wp:meta_value>
                     </wp:postmeta>
-        <% end_if %>
+        <% end_if %> --%>
         <% if $Categories %>
             <% loop $Categories %>
                 <category domain="category" nicename="$URLSegment"><![CDATA[$Title]]></category>
@@ -153,7 +153,7 @@
     <item>
         <wp:post_type><![CDATA[attachment]]></wp:post_type>
         <title>$Alt</title>
-        <wp:post_id>$PostID</wp:post_id>
+        <wp:post_id>$ID</wp:post_id>
         <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
         <pubDate>$Created</pubDate>
     </item>
