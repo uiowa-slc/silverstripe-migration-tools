@@ -3,8 +3,8 @@
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Parsers\ShortcodeParser;
-
-
+use SilverStripe\ORM\ArrayList;
+use Thunder\Shortcode\Parser\RegularParser;
 class WxrExportPageExtension extends DataExtension {
 
 
@@ -32,8 +32,35 @@ class WxrExportPageExtension extends DataExtension {
 
     }
 
+    public function getInlineImages(){
+        $content = $this->owner->Content;
+
+        $parser = new RegularParser();
+        $parsedShortcodes = $parser->parse($content);
+        $imagesInline = new ArrayList();
+
+        foreach ($parsedShortcodes as $shortcode) {
+            $name = $shortcode->getName();
+            if ($name == "image") {
+                $params = $shortcode->getParameters();
+                //print_r($params);
+                $id = $params['id'];
+                $image = Image::get()->filter(array('ID' => $id))->First();
+
+                if ($image) {
+                    $imagesInline->push($image);
+                }
+
+            }
+
+        }
+
+        return $imagesInline;
+    }
+
     public function ImageLookup(){
         $page = $this->owner->data();
+        $images = new ArrayList();
 
         $tries = array(
 
@@ -65,11 +92,12 @@ class WxrExportPageExtension extends DataExtension {
             if($i) {
                 if($page->getComponent($t)->exists()){
                     // echo 'component exists: '.$i;
-                    return $page->getComponent($t);
+                    $images->push($page->getComponent($t));
                 }
             }
         }
 
+        return $images;
 
     }
 

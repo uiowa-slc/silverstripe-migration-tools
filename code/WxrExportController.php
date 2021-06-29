@@ -82,7 +82,7 @@ class WxrExportController extends ContentController {
 		//     'ClassName:PartialMatch:not' => 'HomePage',
 		//     'ClassName:PartialMatch:not' => 'UtilityPage',
 		// ];
-		$pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'HomePage');
+		$pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage');
 		// print_r($pages->toArray());
 		foreach ($pages as $page) {
 			//$versionedPage = $page->VersionsList()->sort('Version DESC')->First();
@@ -95,14 +95,14 @@ class WxrExportController extends ContentController {
 		$attachments = new ArrayList();
 
 		foreach($versionedPages as $page){
-			$pageImage = $page->ImageLookup();
+			$pageImages = $page->ImageLookup();
 
 
 			// $postId = new DBInt();
 			// $postId->setValue($page->ID);
 			// $pageImage->PostID = $postId;
 
-			if($pageImage){
+			foreach($pageImages as $pageImage){
 
 				$proxyObject = new DataObject();
 				$postId = new DBInt();
@@ -115,8 +115,25 @@ class WxrExportController extends ContentController {
 				$attachments->push($proxyObject);
 			}
 
+			$pageInlineImages = $page->getInlineImages();
+
+			foreach($pageInlineImages as $inlineImage){
+				$proxyObject = new DataObject();
+				$postId = new DBInt();
+				$postId->setValue($page->ID);
+				$proxyObject->PostID = $postId;
+				$proxyObject->Title = $inlineImage->Title;
+				$proxyObject->AbsoluteURL = $inlineImage->FitMax(2592,1458)->getAbsoluteURL();
+				$proxyObject->Alt = $inlineImage->Title;
+				$proxyObject->Created = $inlineImage->Created;
+				$attachments->push($proxyObject);
+
+			}
+
 
 		}
+
+
 
 		//$blogTagsCats = $blogTags->merge($blogCats);
 

@@ -153,24 +153,7 @@ class SiteTreeReviewerController extends ContentController {
 
 		$content = $page->Content;
 		//TODO GET INLINE IMAGES
-		$parser = new RegularParser();
-		$parsedShortcodes = $parser->parse($content);
-
-		foreach ($parsedShortcodes as $shortcode) {
-			$name = $shortcode->getName();
-			if ($name == "image") {
-				$params = $shortcode->getParameters();
-				//print_r($params);
-				$id = $params['id'];
-				$image = Image::get()->filter(array('ID' => $id))->First();
-
-				if ($image) {
-					$imagesInline->push($image);
-				}
-
-			}
-
-		}
+		$inlineImages = $page->getInlineImages();
 		//print_r($parser->parse($content));
 
 		//BLOCK IMAGES:
