@@ -124,14 +124,14 @@
         <wp:is_sticky>0</wp:is_sticky>
 
         <% if $ImageLookup %>
-             <wp:attachment_url><![CDATA[$ImageLookup.AbsoluteURL]]></wp:attachment_url>
+             <wp:attachment_url><![CDATA[$ImageLookup.FitMax(1920,1080).AbsoluteURL]]></wp:attachment_url>
                                                         <wp:postmeta>
                     <wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key>
-                    <wp:meta_value><![CDATA[$ImageLookup.AbsoluteURL]]></wp:meta_value>
+                    <wp:meta_value><![CDATA[$ImageLookup.FitMax(1920,1080).AbsoluteURL]]></wp:meta_value>
                     </wp:postmeta>
                                         <wp:postmeta>
                     <wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key>
-                    <wp:meta_value><![CDATA[a:5:{s:5:"width";i:$ImageLookup.Width;s:6:"height";i:$ImageLookup.Height;s:4:"file";s:26:"$URL";a:0:{}}]]></wp:meta_value>
+                    <wp:meta_value><![CDATA[a:5:{s:5:"width";i:$$ImageLookup.FitMax(1920,1080).Width;s:6:"height";i:$ImageLookup.FitMax(1920,1080).Height;s:4:"file";s:26:"$URL";a:0:{}}]]></wp:meta_value>
                     </wp:postmeta>
         <% end_if %>
         <% if $Categories %>
@@ -154,7 +154,7 @@
         <wp:post_type><![CDATA[attachment]]></wp:post_type>
         <title>$Alt</title>
         <wp:post_id>$PostID</wp:post_id>
-        <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
+        <wp:attachment_url>$FitMax(1920,1080).AbsoluteURL</wp:attachment_url>
         <pubDate>$Created</pubDate>
     </item>
 
