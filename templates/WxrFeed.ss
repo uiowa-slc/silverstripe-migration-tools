@@ -103,6 +103,8 @@
         <wp:menu_order>$SortOrder</wp:menu_order>
         <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
             <wp:post_type><![CDATA[post]]></wp:post_type>
+        <% else_if $ClassName == "NewsEntry" %>
+             <wp:post_type><![CDATA[post]]></wp:post_type>
         <% else_if $ClassName == "Topic" %>
             <wp:post_type><![CDATA[post]]></wp:post_type>
         <% else_if $ClassName == "StaffPage" %>
