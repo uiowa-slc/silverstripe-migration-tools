@@ -153,7 +153,7 @@
     <item>
         <wp:post_type><![CDATA[attachment]]></wp:post_type>
         <title>$Alt</title>
-        <wp:post_id>$ID</wp:post_id>
+        <wp:post_id>$PostID</wp:post_id>
         <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
         <pubDate>$Created</pubDate>
     </item>

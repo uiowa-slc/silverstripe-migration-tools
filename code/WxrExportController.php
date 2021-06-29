@@ -121,7 +121,7 @@ class WxrExportController extends ContentController {
 				$proxyObject = new DataObject();
 				$postId = new DBInt();
 				$postId->setValue($page->ID);
-				$proxyObject->ID = $inlineImage->ID;
+				$proxyObject->PostID = $inlineImage->ID;
 				$proxyObject->Title = $inlineImage->Title;
 				$proxyObject->AbsoluteURL = $inlineImage->FitMax(2592,1458)->getAbsoluteURL();
 				$proxyObject->Alt = $inlineImage->Title;
