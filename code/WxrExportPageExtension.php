@@ -5,6 +5,8 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Parsers\ShortcodeParser;
 use SilverStripe\ORM\ArrayList;
 use Thunder\Shortcode\Parser\RegularParser;
+use SilverStripe\Assets\Image;
+
 class WxrExportPageExtension extends DataExtension {
 
 

@@ -90,7 +90,7 @@
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
         <content:encoded><![CDATA[$ContentWxrFiltered.RAW]]><![CDATA[$Policies.RAW]]><![CDATA[$StaffResearch.RAW]]></content:encoded>
-        <excerpt:encoded><% if $MetaDescription %><![CDATA[$MetaDescription]]><% else %><![CDATA[$Content.Summary.RAW]]><% end_if %></excerpt:encoded>
+        <excerpt:encoded><% if $MetaDescription %><![CDATA[$MetaDescription]]><% else %><![CDATA[$ContentWxrFiltered.Summary.RAW]]><% end_if %></excerpt:encoded>
         <wp:post_id>$ID</wp:post_id>
 
         <wp:post_date><![CDATA[$Created]]></wp:post_date>
@@ -109,6 +109,11 @@
             <wp:post_type><![CDATA[post]]></wp:post_type>
         <% else_if $ClassName == "StaffPage" %>
             <wp:post_type><![CDATA[staffpage]]></wp:post_type>
+            <firstname>$FirstName $MiddleName</firstname>
+            <lastname>$LastName</lastname>
+            <phone>$Phone</phone>
+            <email>$EmailAddress</email>
+            <position>$Position</position>
         <% else_if $ClassName == "StaffMember" %>
             <wp:post_type><![CDATA[staffmembercustom]]></wp:post_type>
             <firstname>$FirstName</firstname>
