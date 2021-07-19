@@ -42,6 +42,8 @@ class WxrExportController extends ContentController {
 	// ];
 
 	public function index($request) {
+
+        $getVars = $request->getVars();
 		$filter = new URLSegmentFilter();
 		$filename = $filter->filter($this->SiteConfig()->obj('Title')) . '.xml';
 
@@ -83,6 +85,15 @@ class WxrExportController extends ContentController {
 		//     'ClassName:PartialMatch:not' => 'UtilityPage',
 		// ];
 		$pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage');
+
+
+        if(isset($getVars["notopics"])){
+
+            $pages = $pages->exclude('ClassName:PartialMatch', 'TopicHolder')->exclude('ClassName:PartialMatch', 'Topic');
+
+
+        }
+
 		// print_r($pages->toArray());
 		foreach ($pages as $page) {
 			//$versionedPage = $page->VersionsList()->sort('Version DESC')->First();
@@ -155,7 +166,7 @@ class WxrExportController extends ContentController {
 		$dom->formatOutput = true;
 		$dom->loadXML($xml->asXML());
 
-        $getVars = $request->getVars();
+
 
         if(isset($getVars["view"])){
             header('Content-type: text/xml');
