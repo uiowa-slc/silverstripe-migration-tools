@@ -99,14 +99,21 @@ class WxrExportController extends ContentController {
 			//$versionedPage = $page->VersionsList()->sort('Version DESC')->First();
 			$versionedPageId = Versioned::get_versionnumber_by_stage(get_class($page), 'Live', $page->ID);
 			$versionedPage = $page->VersionsList()->filter(array('Version' => $versionedPageId))->First();
-			$versionedPages->push($versionedPage);
+
+            //if a versioned page is orphaned/doesn't have an original page (aka the page has been nuked/archived)
+            if(isset($versionedPage->RecordID)){
+                $versionedPages->push($versionedPage);
+            }
+
+
 
 		}
 
 		$attachments = new ArrayList();
 
-		foreach($versionedPages as $page){
-			$pageImages = $page->ImageLookup();
+		foreach($versionedPages as $versionedPage){
+
+			$pageImages = $versionedPage->ImageLookup();
 
 
 			// $postId = new DBInt();
@@ -117,7 +124,7 @@ class WxrExportController extends ContentController {
 
 				$proxyObject = new DataObject();
 				$postId = new DBInt();
-				$postId->setValue($page->ID);
+				$postId->setValue($versionedPage->ID);
 				$proxyObject->PostID = $pageImage->ID;
 				$proxyObject->Title = $pageImage->Title;
 				$proxyObject->AbsoluteURL = $pageImage->FitMax(2592,1458)->getAbsoluteURL();
@@ -126,24 +133,53 @@ class WxrExportController extends ContentController {
 				$attachments->push($proxyObject);
 			}
 
-			$pageInlineImages = $page->getInlineImages();
+			$pageInlineImages = $versionedPage->getInlineImages();
+
+            // print_r($pageInlineImages->toArray());
 
 			foreach($pageInlineImages as $inlineImage){
-				$proxyObject = new DataObject();
-				$postId = new DBInt();
-				$postId->setValue($page->ID);
-				$proxyObject->PostID = $inlineImage->ID;
-				$proxyObject->Title = $inlineImage->Title;
-				$proxyObject->AbsoluteURL = $inlineImage->FitMax(2592,1458)->getAbsoluteURL();
-				$proxyObject->Alt = $inlineImage->Title;
-				$proxyObject->Created = $inlineImage->Created;
-				$attachments->push($proxyObject);
+                if($inlineImage->getAbsoluteURL()){
+                    $proxyObject = new DataObject();
+                    $postId = new DBInt();
+                    $postId->setValue($versionedPage->ID);
+                    $proxyObject->PostID = $inlineImage->ID;
+                    $proxyObject->Title = $inlineImage->Title;
+                    $proxyObject->AbsoluteURL = $inlineImage->FitMax(2592,1458)->getAbsoluteURL();
+                    $proxyObject->Alt = $inlineImage->Title;
+                    $proxyObject->Created = $inlineImage->Created;
+                    $attachments->push($proxyObject);
+
+                }
+
 
 			}
 
 
 		}
 
+        $homePageHeroFeatures = new ArrayList();
+
+
+        if (class_exists('NewHomePageHeroFeature')) {
+            $homePageHeroFeatures = NewHomePageHeroFeature::get();
+
+        }
+
+        foreach($homePageHeroFeatures as $homePageHeroFeature){
+            $image = $homePageHeroFeature->obj('Image');
+            if($image->getAbsoluteURL()){
+            $proxyObject = new DataObject();
+            $postId = new DBInt();
+            $postId->setValue($page->ID);
+            $proxyObject->PostID = $image->ID;
+            $proxyObject->Title = $image->Title;
+            $proxyObject->AbsoluteURL = $image->FitMax(2592,1458)->getAbsoluteURL();
+            $proxyObject->Alt = $image->Title;
+            $proxyObject->Created = $image->Created;
+
+            $attachments->push($homePageHeroFeature->proxyObject);
+            }
+        }
 
 
 		//$blogTagsCats = $blogTags->merge($blogCats);

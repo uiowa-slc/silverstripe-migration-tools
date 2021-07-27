@@ -99,6 +99,11 @@ class WxrExportPageExtension extends DataExtension {
             }
         }
 
+
+
+
+
+
         return $images;
 
     }
