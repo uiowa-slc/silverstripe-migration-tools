@@ -182,6 +182,8 @@ class WxrExportController extends ContentController {
         }
 
 
+        $attachments->removeDuplicates();
+
         //$blogTagsCats = $blogTags->merge($blogCats);
 
         $templateData = new ArrayData([
