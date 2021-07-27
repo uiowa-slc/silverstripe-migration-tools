@@ -182,7 +182,7 @@ class WxrExportController extends ContentController {
         }
 
 
-        $attachments->removeDuplicates();
+        $attachments->removeDuplicates('PostID');
 
         //$blogTagsCats = $blogTags->merge($blogCats);
 
