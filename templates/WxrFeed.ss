@@ -170,6 +170,7 @@
         <title>$Title</title>
         <wp:post_id>$PostID</wp:post_id>
         <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
+        <relative_url>$RelativeURL</relative_url>
         <pubDate>$Created</pubDate>
     </item>
 
