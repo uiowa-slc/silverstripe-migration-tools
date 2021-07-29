@@ -201,7 +201,9 @@ class WxrExportController extends ContentController {
                     $proxyFileObject->PostID = $ssFile->ID;
                     $proxyFileObject->Title = $ssFile->Title;
                     $proxyFileObject->AbsoluteURL = $ssFile->getAbsoluteURL();
-                    $proxyFileObject->RelativeURL = $ssFile->getURL();
+                    $relUrl = $ssFile->getURL();
+                    $relUrl = ltrim($relUrl, '/');
+                    $proxyFileObject->RelativeURL = $relUrl;
                     // $proxyFileObject->RelativeURL = 'assets/'.$ssFile->FileFilename;
                     $proxyFileObject->Alt = $ssFile->Title;
                     $proxyFileObject->Created = $ssFile->Created;
