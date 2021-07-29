@@ -16,6 +16,9 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
+use SilverStripe\Assets\File;
+
+
 class WxrExportController extends ContentController {
 
     private static $url_handlers = [
@@ -157,6 +160,9 @@ class WxrExportController extends ContentController {
 
         }
 
+
+
+
         $homePageHeroFeatures = new ArrayList();
 
 
@@ -184,12 +190,31 @@ class WxrExportController extends ContentController {
 
         $attachments->removeDuplicates('PostID');
 
+        $files = new ArrayList();
+        $ssFiles = File::get()->filter(array('ClassName' => 'SilverStripe\Assets\File'));
+
+        foreach($ssFiles as $ssFile){
+                if($ssFile->getAbsoluteURL()){
+                    $proxyFileObject = new DataObject();
+                    $postId = new DBInt();
+                    $postId->setValue($versionedPage->ID);
+                    $proxyFileObject->PostID = $ssFile->ID;
+                    $proxyFileObject->Title = $ssFile->Title;
+                    $proxyFileObject->AbsoluteURL = $ssFile->getAbsoluteURL();
+                    $proxyFileObject->Alt = $ssFile->Title;
+                    $proxyFileObject->Created = $ssFile->Created;
+                    $files->push($proxyFileObject);
+
+                }
+            //print_r($ssFile->getAbsoluteURL());
+        }
         //$blogTagsCats = $blogTags->merge($blogCats);
 
         $templateData = new ArrayData([
             'Authors' => $authors,
             'Pages' => $versionedPages,
             'Attachments' => $attachments,
+            'Files' => $files,
             'Tags' => $tags,
             'Categories' => $cats,
             'TagsCats' => $tagsCats,
@@ -203,8 +228,6 @@ class WxrExportController extends ContentController {
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
-
-
 
         if(isset($getVars["view"])){
             header('Content-type: text/xml');
