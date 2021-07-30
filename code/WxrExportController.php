@@ -17,7 +17,7 @@ use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\Assets\File;
-
+use SilverStripe\Assets\Image;
 
 class WxrExportController extends ContentController {
 
@@ -114,49 +114,79 @@ class WxrExportController extends ContentController {
 
         $attachments = new ArrayList();
 
-        foreach($versionedPages as $versionedPage){
+        if(isset($getVars["allimages"])){
+            $files = new ArrayList();
+            $ssImages = Image::get()->filter(array('ClassName' => 'SilverStripe\Assets\Image'));
 
-            $pageImages = $versionedPage->ImageLookup();
+            foreach($ssImages as $ssImage){
+                    if($ssImage->getAbsoluteURL()){
+                        $proxyImageObject = new DataObject();
+                        $postId = new DBInt();
+                        $postId->setValue($versionedPage->ID);
+                        $proxyImageObject->PostID = $ssImage->ID;
+                        $proxyImageObject->Title = $ssImage->Title;
+                        $proxyImageObject->AbsoluteURL = $ssImage->getAbsoluteURL();
+                        $relUrl = $ssImage->getURL();
+                        $relUrl = ltrim($relUrl, '/assets/');
+                        $proxyImageObject->RelativeURL = $relUrl;
+                        // $proxyImageObject->RelativeURL = 'assets/'.$ssImage->ImageImagename;
+                        $proxyImageObject->Alt = $ssImage->Title;
+                        $proxyImageObject->Created = $ssImage->Created;
+                        $attachments->push($proxyImageObject);
 
-
-            // $postId = new DBInt();
-            // $postId->setValue($page->ID);
-            // $pageImage->PostID = $postId;
-
-            foreach($pageImages as $pageImage){
-
-                $proxyObject = new DataObject();
-                $postId = new DBInt();
-                $postId->setValue($versionedPage->ID);
-                $proxyObject->PostID = $pageImage->ID;
-                $proxyObject->Title = $pageImage->Title;
-                $proxyObject->AbsoluteURL = $pageImage->FitMax(2592,1458)->getAbsoluteURL();
-                $proxyObject->Alt = $pageImage->Title;
-                $proxyObject->Created = $pageImage->Created;
-                $attachments->push($proxyObject);
+                    }
+                //print_r($ssImage->getAbsoluteURL());
             }
+            //$blo
+        }else{
 
-            $pageInlineImages = $versionedPage->getInlineImages();
 
-            // print_r($pageInlineImages->toArray());
 
-            foreach($pageInlineImages as $inlineImage){
-                if($inlineImage->getAbsoluteURL()){
+            foreach($versionedPages as $versionedPage){
+
+                $pageImages = $versionedPage->ImageLookup();
+
+
+                // $postId = new DBInt();
+                // $postId->setValue($page->ID);
+                // $pageImage->PostID = $postId;
+
+                foreach($pageImages as $pageImage){
+
                     $proxyObject = new DataObject();
                     $postId = new DBInt();
                     $postId->setValue($versionedPage->ID);
-                    $proxyObject->PostID = $inlineImage->ID;
-                    $proxyObject->Title = $inlineImage->Title;
-                    $proxyObject->AbsoluteURL = $inlineImage->FitMax(2592,1458)->getAbsoluteURL();
-                    $proxyObject->Alt = $inlineImage->Title;
-                    $proxyObject->Created = $inlineImage->Created;
+                    $proxyObject->PostID = $pageImage->ID;
+                    $proxyObject->Title = $pageImage->Title;
+                    $proxyObject->AbsoluteURL = $pageImage->FitMax(2592,1458)->getAbsoluteURL();
+                    $proxyObject->Alt = $pageImage->Title;
+                    $proxyObject->Created = $pageImage->Created;
                     $attachments->push($proxyObject);
+                }
+
+                $pageInlineImages = $versionedPage->getInlineImages();
+
+                // print_r($pageInlineImages->toArray());
+
+                foreach($pageInlineImages as $inlineImage){
+                    if($inlineImage->getAbsoluteURL()){
+                        $proxyObject = new DataObject();
+                        $postId = new DBInt();
+                        $postId->setValue($versionedPage->ID);
+                        $proxyObject->PostID = $inlineImage->ID;
+                        $proxyObject->Title = $inlineImage->Title;
+                        $proxyObject->AbsoluteURL = $inlineImage->FitMax(2592,1458)->getAbsoluteURL();
+                        $proxyObject->Alt = $inlineImage->Title;
+                        $proxyObject->Created = $inlineImage->Created;
+                        $attachments->push($proxyObject);
+
+                    }
+
 
                 }
 
 
             }
-
 
         }
 
