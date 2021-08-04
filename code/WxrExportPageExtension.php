@@ -60,6 +60,15 @@ class WxrExportPageExtension extends DataExtension {
         return $imagesInline;
     }
 
+    public function Path(){
+        $page = $this->owner;
+
+        $path = '/'.$page->RelativeLink();
+
+        return $path;
+
+    }
+
     public function ImageLookup(){
         $page = $this->owner->data();
         $images = new ArrayList();
