@@ -137,25 +137,23 @@
 
 <% end_loop %>
 
-<% loop $Attachments %>
-    <item>
-        <wp:post_type><![CDATA[attachment]]></wp:post_type>
+<% loop $Images %>
+    <image>
         <title>$Alt</title>
         <wp:post_id>$PostID</wp:post_id>
         <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
         <pubDate>$Created</pubDate>
-    </item>
+    </image>
 
 <% end_loop %>
 <% loop $Files %>
-    <item>
-        <wp:post_type><![CDATA[file]]></wp:post_type>
+    <file>
         <title>$Title</title>
         <wp:post_id>$PostID</wp:post_id>
         <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
         <relative_url>$RelativeURL</relative_url>
         <pubDate>$Created</pubDate>
-    </item>
+    </file>
 
 <% end_loop %>
                 </channel>
