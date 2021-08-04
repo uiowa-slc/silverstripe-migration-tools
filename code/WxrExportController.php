@@ -247,7 +247,7 @@ class WxrExportController extends ContentController {
         $templateData = new ArrayData([
             'Authors' => $authors,
             'Pages' => $versionedPages,
-            'Attachments' => $attachments,
+            'Images' => $attachments,
             'Files' => $files,
             'Tags' => $tags,
             'Categories' => $cats,
