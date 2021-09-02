@@ -64,7 +64,7 @@ font-size: 0.9em;
                 <h1><i class="fas fa-tree"></i> SiteTree Reviewer</h1>
                 <div class="btn-group mb-2" role="group" aria-label="">
                     <a href="siteTreeReviewer/csvExport" class="btn btn-outline-primary"><i class="fas fa-file-csv"> Export to CSV </i></a>
-                    <a href="wxrExport/" class="btn btn-outline-secondary"><i class="far fa-file-archive"></i> Export to WordPress XML </a>
+                    <a href="wxrExport/" class="btn btn-outline-secondary"><i class="far fa-file-archive"></i> Export to XML </a>
                 </div>
                 <p>Exported CSV files use the <a href="https://iowa-my.sharepoint.com/:x:/g/personal/bosto_uiowa_edu/Eb0r95BQ86tMlQvisrBBOeoBPiGNgYpGNIN6pcOxYsFr_A?e=6YMVFN" target="blank">Content Inventory spreadsheet template</a> columns.</a></p>
                 <p>    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#recentEdits" aria-expanded="false" aria-controls="collapseExample">
