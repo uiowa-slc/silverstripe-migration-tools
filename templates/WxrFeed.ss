@@ -9,13 +9,7 @@
 
 <channel>
     <title>$SiteConfig.Title</title>
-    <link>$BaseUrl</link>
-    <description></description>
     <language>en-US</language>
-    <wp:wxr_version>1.2</wp:wxr_version>
-    <wp:base_site_url>$BaseUrl</wp:base_site_url>
-    <wp:base_blog_url>$BaseUrl</wp:base_blog_url>
-
     <% loop $Categories %>
     <wp:category>
         <wp:term_id>$ID</wp:term_id>
@@ -47,9 +41,6 @@
         <wp:term_name><![CDATA[$Title]]></wp:term_name>
     </wp:term>
     <% end_loop %> --%>
-
-
-    <generator>https://wordpress.org/?v=5.6.1</generator>
 
     <% loop $Pages %>
         <item>
