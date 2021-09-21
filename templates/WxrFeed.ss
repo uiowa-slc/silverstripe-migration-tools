@@ -11,17 +11,10 @@
     <title>$SiteConfig.Title</title>
     <link>$BaseUrl</link>
     <description></description>
-    <pubDate>Thu, 18 Feb 2021 20:33:25 +0000</pubDate>
     <language>en-US</language>
     <wp:wxr_version>1.2</wp:wxr_version>
     <wp:base_site_url>$BaseUrl</wp:base_site_url>
     <wp:base_blog_url>$BaseUrl</wp:base_blog_url>
-
-    <% loop $Authors %>
-
-        <wp:author><wp:author_id>$ID</wp:author_id><wp:author_login><![CDATA[$AdUsername]]></wp:author_login><wp:author_email><![CDATA[$Email]]></wp:author_email><wp:author_display_name><![CDATA[$AdUsername]]></wp:author_display_name><wp:author_first_name><![CDATA[$FirstName]]></wp:author_first_name><wp:author_last_name><![CDATA[$Surname]]></wp:author_last_name></wp:author>
-
-    <% end_loop %>
 
     <% loop $Categories %>
     <wp:category>
@@ -72,7 +65,9 @@
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
         <content:encoded><![CDATA[$ContentWxrFiltered.RAW]]><![CDATA[$Policies.RAW]]><![CDATA[$StaffResearch.RAW]]></content:encoded>
+        <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
         <excerpt:encoded><% if $MetaDescription %><![CDATA[$MetaDescription]]><% else %><![CDATA[$ContentWxrFiltered.Summary.RAW]]><% end_if %></excerpt:encoded>
+        <% end_if %>
         <wp:post_id>$ID</wp:post_id>
 
         <wp:post_date><![CDATA[$Created]]></wp:post_date>
@@ -156,5 +151,5 @@
     </file>
 
 <% end_loop %>
-                </channel>
+    </channel>
 </rss>
