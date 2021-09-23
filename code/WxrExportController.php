@@ -137,9 +137,34 @@ class WxrExportController extends ContentController {
                     }
                 //print_r($ssImage->getAbsoluteURL());
             }
-            //$blo
+        // Only get images we're using:
         }else{
 
+            //47 Things Specific:
+            if (class_exists('Thing')) {
+                $things = Thing::get();
+
+                //print_r($things->toArray());
+
+                foreach($things as $thing){
+                    $thingProxyObject = new DataObject();
+
+                    $thingImages = $thing->ImageLookup();
+
+
+
+                    foreach($thingImages as $thingImage){
+                        $thingProxyObject->PostID = $thing->ID;
+                        $thingProxyObject->Title = $thingImage->Title;
+                        $thingProxyObject->AbsoluteURL = $thingImage->FitMax(2592,1458)->getAbsoluteURL();
+                        $thingProxyObject->Alt = $thingImage->Alt;
+                        $thingProxyObject->Created = $thingImage->Created;
+                        $attachments->push($thingProxyObject);
+                    }
+
+
+                }
+            }
 
 
             foreach($versionedPages as $versionedPage){
