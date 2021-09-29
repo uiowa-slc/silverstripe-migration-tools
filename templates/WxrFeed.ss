@@ -56,9 +56,7 @@
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
         <content:encoded><![CDATA[$ContentWxrFiltered.RAW]]><![CDATA[$Policies.RAW]]><![CDATA[$StaffResearch.RAW]]>
-            <![CDATA[<% if $WebsiteLink %>
-              <p><a href="$WebsiteLink" class="bttn bttn--primary bttn--caps" target="_blank"><% if $WebsiteLinkButtonText %>$WebsiteLinkButtonText<% else %>Visit Website<% end_if %> <span class="fa-arrow-right fas"></span></a></p>
-              <% end_if %>
+            <![CDATA[<% if $WebsiteLink %><p><a href="$WebsiteLink" class="bttn bttn--primary bttn--caps" target="_blank"><% if $WebsiteLinkButtonText %>$WebsiteLinkButtonText<% else %>Visit Website<% end_if %> <span class="fa-arrow-right fas"></span></a></p><% end_if %>]]>
         </content:encoded>
         <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
         <excerpt:encoded><% if $MetaDescription %><![CDATA[$MetaDescription]]><% else %><![CDATA[$ContentWxrFiltered.Summary.RAW]]><% end_if %></excerpt:encoded>
