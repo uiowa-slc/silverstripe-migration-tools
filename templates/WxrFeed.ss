@@ -73,8 +73,6 @@
             <wp:post_type><![CDATA[post]]></wp:post_type>
         <% else_if $ClassName == "NewsEntry" %>
              <wp:post_type><![CDATA[post]]></wp:post_type>
-        <% else_if $ClassName == "Topic" %>
-            <wp:post_type><![CDATA[post]]></wp:post_type>
         <% else_if $ClassName == "StaffPage" %>
             <wp:post_type><![CDATA[staffpage]]></wp:post_type>
             <firstname>$FirstName $MiddleName</firstname>

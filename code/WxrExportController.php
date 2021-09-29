@@ -29,7 +29,6 @@ class WxrExportController extends ContentController {
         parent::init();
 
         if (!Permission::check('ADMIN')) {
-            //return $this->httpError(403);
             $response = $this ? $this->getResponse() : new HTTPResponse();
             $response->setStatusCode(403);
             return $this->redirect(Config::inst()->get('SilverStripe\\Security\\Security', 'login_url') . "?BackURL=" . urlencode($_SERVER['REQUEST_URI']));
