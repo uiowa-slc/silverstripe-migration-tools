@@ -86,7 +86,7 @@ class WxrExportController extends ContentController {
         //     'ClassName:PartialMatch:not' => 'HomePage',
         //     'ClassName:PartialMatch:not' => 'UtilityPage',
         // ];
-        $pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'RedirectorPage');
+        $pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'RedirectorPage')->exclude('ClassName:PartialMatch', 'CalendarEvent')->exclude('ClassName:PartialMatch', 'Calendar');
  
 
         if(isset($getVars["notopics"])){
@@ -240,8 +240,27 @@ class WxrExportController extends ContentController {
             $attachments->push($proxyObject);
             }
         }
+        if (class_exists('Button')) {
+            $buttons = Button::get();
+        }
 
+        foreach($buttons as $button){
+            $image = $button->obj('Photo');
+            if($image->getAbsoluteURL()){
+            $proxyObject = new DataObject();
+            $postId = new DBInt();
+            $postId->setValue($page->ID);
+            $proxyObject->PostID = $image->ID;
+            $proxyObject->Title = $image->Title;
+            $proxyObject->AbsoluteURL = $image->FitMax(2592,1458)->getAbsoluteURL();
+            $proxyObject->Alt = $image->Title;
+            $proxyObject->Created = $image->Created;
 
+            $attachments->push($proxyObject);
+            }
+        }
+
+        //Remove any duplicates we sweeped up:
         $attachments->removeDuplicates('PostID');
 
         $files = new ArrayList();

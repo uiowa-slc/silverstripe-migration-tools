@@ -89,10 +89,17 @@
             <phone>$StaffPhoneNumber</phone>
             <email>$StaffEmailAddress</email>
             <position>$StaffPosition</position>
+        <% else_if $ClassName == "CouncilMember" %>
+            <wp:post_type><![CDATA[staffmembercustom]]></wp:post_type>
+            <firstname>$FirstName</firstname>
+            <lastname>$LastName</lastname>
+            <position>$Position</position>
         <% else %>
             <wp:post_type><![CDATA[page]]></wp:post_type>
         <% end_if %>
+        <% if $ClassName != "CouncilMember" %>
         <path>$Path</path>
+        <% end_if %>
 
         <wp:post_password><![CDATA[]]></wp:post_password>
         <wp:is_sticky>0</wp:is_sticky>

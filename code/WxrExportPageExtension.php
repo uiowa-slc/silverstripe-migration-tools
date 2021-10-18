@@ -91,7 +91,18 @@ class WxrExportPageExtension extends DataExtension {
             'Program3Photo',
             'DefaultPhoto',
             'AboutUsFeature1Photo',
-            'AboutUsFeature2Photo'
+            'AboutUsFeature2Photo',
+            'CouncilPhoto',
+            'HeaderPhoto',
+            'HeaderPhoto1',
+            'HeaderPhoto2',
+            'HeaderPhoto3',
+            'CalloutOnePhoto',
+            'CalloutTwoPhoto',
+            'CalloutThreePhoto',
+            'PagePhoto',
+            'HomePhoto',
+            'SponsorPhoto'
 
         );
 
