@@ -59,13 +59,13 @@ class WxrExportController extends ContentController {
         $authors = Member::get();
 
         //normalize authors, ensure they have HawkID username
-        foreach ($authors as $author) {
+        // foreach ($authors as $author) {
 
-            if (!$author->AdUsername) {
-                $author->parseNamesAndGroups();
-                $author->write();
-            }
-        }
+        //     if (!$author->AdUsername) {
+        //         $author->parseNamesAndGroups();
+        //         $author->write();
+        //     }
+        // }
 
         $versionedPages = new ArrayList();
 
