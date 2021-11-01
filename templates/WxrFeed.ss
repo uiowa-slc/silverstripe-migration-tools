@@ -46,12 +46,7 @@
         <item>
         <title>$Title</title>
         <link>$AbsoluteLink</link>
-        <% if $PublishDate %>
-        <%-- <pubDate>Thu, 18 Feb 2021 20:29:19 +0000</pubDate> --%>
-            <pubDate>$PublishDate</pubDate>
-        <% else %>
-           <pubDate>$LastEdited</pubDate>
-        <% end_if %>
+        <pubDate>$LastEdited</pubDate>
         <dc:creator><![CDATA[$Author.AdUsername]]></dc:creator>
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
