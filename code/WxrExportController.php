@@ -177,15 +177,18 @@ class WxrExportController extends ContentController {
 
                 foreach($pageImages as $pageImage){
 
-                    $proxyObject = new DataObject();
-                    $postId = new DBInt();
-                    $postId->setValue($versionedPage->ID);
-                    $proxyObject->PostID = $pageImage->ID;
-                    $proxyObject->Title = $pageImage->Title;
-                    $proxyObject->AbsoluteURL = $pageImage->FitMax(2592,1458)->getAbsoluteURL();
-                    $proxyObject->Alt = $pageImage->Title;
-                    $proxyObject->Created = $pageImage->Created;
-                    $attachments->push($proxyObject);
+                    //hack to deal with + check for PDFs that have been "seen" as images by earlier SilverStripe vers
+                    if(method_exists($pageImage->FitMax(2592,1458), 'getAbsoluteURL')){
+                        $proxyObject = new DataObject();
+                        $postId = new DBInt();
+                        $postId->setValue($versionedPage->ID);
+                        $proxyObject->PostID = $pageImage->ID;
+                        $proxyObject->Title = $pageImage->Title;
+                        $proxyObject->AbsoluteURL = $pageImage->FitMax(2592,1458)->getAbsoluteURL();
+                        $proxyObject->Alt = $pageImage->Title;
+                        $proxyObject->Created = $pageImage->Created;
+                        $attachments->push($proxyObject);
+                    }
                 }
 
                 $pageInlineImages = $versionedPage->getInlineImages();
