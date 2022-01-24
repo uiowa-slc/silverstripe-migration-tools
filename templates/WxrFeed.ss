@@ -51,7 +51,109 @@
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
         <content:encoded><![CDATA[$ContentWxrFiltered.RAW]]><![CDATA[$Policies.RAW]]><![CDATA[$StaffResearch.RAW]]>
-            <![CDATA[<% if $WebsiteLink %><p><a href="$WebsiteLink" class="bttn bttn--primary bttn--caps" target="_blank"><% if $WebsiteLinkButtonText %>$WebsiteLinkButtonText<% else %>Visit Website<% end_if %> <span class="fa-arrow-right fas"></span></a></p><% end_if %>]]>
+            <![CDATA[<% if $WebsiteLink %><p><a href="$WebsiteLink" class="bttn bttn--primary bttn--caps" target="_blank"><% if $WebsiteLinkButtonText %>$WebsiteLinkButtonText<% else %>Visit Website<% end_if %> <span class="fa-arrow-right fas"></span></a></p><% end_if %>
+                        <% if $FavoriteProject %>
+                            <h2>Favorite SLC project and why?</h2>
+                            $FavoriteProject
+                        <% end_if %>
+
+                        <% if $Interests %>
+                            <h2>Interests</h2>
+                            $Interests
+                        <% end_if %>
+
+
+                        <%-- student --%>
+                        <% if $isStudent %>
+                            <% if $DegreeDescription %>
+                                <h2>Why I chose my degree</h2>
+                                $DegreeDescription
+                            <% end_if %>
+                             <% if $TopStrengths %>
+                                <h2>My top strengths</h2>
+                                $TopStrengths
+                            <% end_if %>
+
+                            <% if $MDExperience %>
+                                <h2>What I've learned from my experience at SLC</h2>
+                                $MDExperience
+                            <% end_if %>
+
+                            <% if $PostGraduation %>
+                                <h2>Plans after graduation</h2>
+                                $PostGraduation
+                            <% end_if %>
+                         <% end_if %>
+
+                        <%-- alumni --%>
+                        <% if $inTeam("Alumni") %>
+                            <% if $EmploymentLocation %>
+                                <h2>Where I'm currently employed</h2>
+                                <% if $EmploymentLocationURL %>
+                                    <a href="$EmploymentLocationURL">$EmploymentLocation</a>
+                                <% else %>
+                                    $EmploymentLocation
+                                <% end_if %>
+                            <% end_if %>
+
+                            <% if $CurrentPosition %>
+                                <h2>My current position title</h2>
+                                $CurrentPosition
+                            <% end_if %>
+
+                            <% if $FavoriteMemory %>
+                                <h2>Favorite memory of SLC</h2>
+                                $FavoriteMemory
+                            <% end_if %>
+
+                            <% if $Advice %>
+                                <h2>What advice would you give to current students?</h2>
+                                $Advice
+                            <% end_if %>
+                        <% end_if %>
+
+                        <%-- Professional Staff --%>
+
+                        <% if $inTeam("Professional Staff") %>
+                            <% if $EnjoymentFactors %>
+                                <h2>What I enjoy about working at SLC</h2>
+                                $EnjoymentFactors
+                            <% end_if %>
+
+                            <% if $JoinDate %>
+                                <h2>When I joined the SLC staff team</h2>
+                                $JoinDate
+                            <% end_if %>
+
+                            <% if $Background %>
+                                <h2>Background and education</h2>
+                                $Background
+                            <% end_if %>
+                        <% end_if %>
+
+                        <% if $FavoriteQuote %>
+                            <h2>Favorite quote</h2>
+                            <blockquote>$FavoriteQuote</blockquote>
+                        <% end_if %>
+                        <% if $InstagramHandle || $TwitterHandle || $LinkedInURL || $GithubURL || $PortfolioURL %>
+                        <ul>
+                            <% if $InstagramHandle %>
+                                <li><a href="http://www.instagram.com/$InstagramHandle/" class="social--instagram">Instagram</a></li>
+                            <% end_if %>
+                            <% if $TwitterHandle %>
+                                <li><a href="http://www.twitter.com/$TwitterHandle/" class="social--twitter">Twitter</a></li>
+                            <% end_if %>
+                            <% if $LinkedInURL %>
+                                <li><a href="$LinkedInURL" class="social--linkedin">LinkedIn</a></li>
+                            <% end_if %>
+                            <% if $GithubURL %>
+                                <li><a href="$GithubURL" class="social--github">Github</a></li>
+                            <% end_if %>
+                            <% if $PortfolioURL %>
+                                <li><a href="$PortfolioURL" class="social--website">Website</a></li>
+                            <% end_if %>
+                        </ul>
+                        <% end_if %>]]>
         </content:encoded>
         <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
         <excerpt:encoded><% if $MetaDescription %><![CDATA[$MetaDescription]]><% else %><![CDATA[$ContentWxrFiltered.Summary.RAW]]><% end_if %></excerpt:encoded>
