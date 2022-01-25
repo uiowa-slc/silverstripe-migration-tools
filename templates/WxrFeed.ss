@@ -136,21 +136,22 @@
                             <blockquote>$FavoriteQuote</blockquote>
                         <% end_if %>
                         <% if $InstagramHandle || $TwitterHandle || $LinkedInURL || $GithubURL || $PortfolioURL %>
+                        <h2>Links:</h2>
                         <ul>
                             <% if $InstagramHandle %>
-                                <li><a href="http://www.instagram.com/$InstagramHandle/" class="social--instagram">Instagram</a></li>
+                                <li><a href="http://www.instagram.com/$InstagramHandle/"><span class="fab fa-instagram"></span> Instagram</a></li>
                             <% end_if %>
                             <% if $TwitterHandle %>
-                                <li><a href="http://www.twitter.com/$TwitterHandle/" class="social--twitter">Twitter</a></li>
+                                <li><a href="http://www.twitter.com/$TwitterHandle/"><span class="fab fa-twitter"></span> Twitter</a></li>
                             <% end_if %>
                             <% if $LinkedInURL %>
-                                <li><a href="$LinkedInURL" class="social--linkedin">LinkedIn</a></li>
+                                <li><a href="$LinkedInURL"><span class="fab fa-linkedin"></span> LinkedIn</a></li>
                             <% end_if %>
                             <% if $GithubURL %>
-                                <li><a href="$GithubURL" class="social--github">Github</a></li>
+                                <li><a href="$GithubURL"><span class="fab fa-github"></span> GitHub</a></li>
                             <% end_if %>
                             <% if $PortfolioURL %>
-                                <li><a href="$PortfolioURL" class="social--website">Website</a></li>
+                                <li><a href="$PortfolioURL"><span class="fas fa-globe"></span> Website</a></li>
                             <% end_if %>
                         </ul>
                         <% end_if %>]]>
@@ -178,7 +179,7 @@
             <lastname>$LastName</lastname>
             <phone>$Phone</phone>
             <email>$EmailAddress</email>
-            <position>$Position</position>
+            <position><% loop $Teams %>$Title<% if not $Last %>, <% end_if %><% end_loop %></position>
         <% else_if $ClassName == "StaffMember" %>
             <wp:post_type><![CDATA[staffmembercustom]]></wp:post_type>
             <firstname>$FirstName</firstname>
