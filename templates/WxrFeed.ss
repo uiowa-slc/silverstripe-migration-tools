@@ -27,7 +27,7 @@
     </wp:tag>
     <% end_loop %>
 
-    <% loop $StaffTeams %>
+    <% loop $AllStaffTeams %>
         <wp:tag>
             <wp:term_id>$ID</wp:term_id>
             <wp:tag_slug><![CDATA[$URLSegment]]></wp:tag_slug>

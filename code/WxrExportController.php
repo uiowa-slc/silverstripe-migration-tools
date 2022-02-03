@@ -269,6 +269,8 @@ class WxrExportController extends ContentController {
                 }
             //print_r($ssFile->getAbsoluteURL());
         }
+
+        $teams = StaffTeam::get();
         //$blogTagsCats = $blogTags->merge($blogCats);
 
         $templateData = new ArrayData([
@@ -279,6 +281,7 @@ class WxrExportController extends ContentController {
             'Tags' => $tags,
             'Categories' => $cats,
             'TagsCats' => $tagsCats,
+            'AllStaffTeams' => $teams
         ]);
 
         $renderedData = $templateData->renderWith('WxrFeed');
@@ -299,4 +302,5 @@ class WxrExportController extends ContentController {
         print($dom->saveXML());
 
     }
+
 }
