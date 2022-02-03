@@ -188,6 +188,11 @@
             <phone>$Phone</phone>
             <email>$EmailAddress</email>
             <position><% loop $TeamsWithoutAlumni %>$TeamTitle<% if not $Last %>, <% end_if %><% end_loop %></position>
+        <% if $Teams %>
+            <% loop $Teams %>
+                <category domain="category" nicename="$URLSegment"><![CDATA[$Name]]></category>
+            <% end_loop %>
+        <% end_if %>
         <% else_if $ClassName == "StaffMember" %>
             <wp:post_type><![CDATA[staffmembercustom]]></wp:post_type>
             <firstname>$FirstName</firstname>
@@ -224,11 +229,7 @@
                 <category domain="post_tag" nicename="$URLSegment"><![CDATA[$Title]]></category>
             <% end_loop %>
         <% end_if %>
-        <% if $Teams %>
-            <% loop $Teams %>
-                <category domain="category" nicename="$URLSegment"><![CDATA[$Name]]></category>
-            <% end_loop %>
-        <% end_if %>
+
 
         </item>
 
