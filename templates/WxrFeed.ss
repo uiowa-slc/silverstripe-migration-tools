@@ -27,6 +27,14 @@
     </wp:tag>
     <% end_loop %>
 
+    <% loop $StaffTeams %>
+        <wp:tag>
+            <wp:term_id>$ID</wp:term_id>
+            <wp:tag_slug><![CDATA[$URLSegment]]></wp:tag_slug>
+            <wp:tag_name><![CDATA[$Name]]></wp:tag_name>
+        </wp:tag>
+    <% end_loop %>
+
 <%--     <% loop $TagsCats %>
     <wp:term>
         <wp:term_id>$Pos</wp:term_id>
@@ -139,19 +147,19 @@
                         <h2>Links:</h2>
                         <ul>
                             <% if $InstagramHandle %>
-                                <li><a href="http://www.instagram.com/$InstagramHandle/"><span class="fab fa-instagram"></span> Instagram</a></li>
+                                <li><a href="https://www.instagram.com/$InstagramHandle/">Instagram</a></li>
                             <% end_if %>
                             <% if $TwitterHandle %>
-                                <li><a href="http://www.twitter.com/$TwitterHandle/"><span class="fab fa-twitter"></span> Twitter</a></li>
+                                <li><a href="https://www.twitter.com/$TwitterHandle/">Twitter</a></li>
                             <% end_if %>
                             <% if $LinkedInURL %>
-                                <li><a href="$LinkedInURL"><span class="fab fa-linkedin"></span> LinkedIn</a></li>
+                                <li><a href="$LinkedInURL">LinkedIn</a></li>
                             <% end_if %>
                             <% if $GithubURL %>
-                                <li><a href="$GithubURL"><span class="fab fa-github"></span> GitHub</a></li>
+                                <li><a href="$GithubURL">GitHub</a></li>
                             <% end_if %>
                             <% if $PortfolioURL %>
-                                <li><a href="$PortfolioURL"><span class="fas fa-globe"></span> Website</a></li>
+                                <li><a href="$PortfolioURL">Website</a></li>
                             <% end_if %>
                         </ul>
                         <% end_if %>]]>
@@ -179,7 +187,7 @@
             <lastname>$LastName</lastname>
             <phone>$Phone</phone>
             <email>$EmailAddress</email>
-            <position><% loop $Teams %>$Title<% if not $Last %>, <% end_if %><% end_loop %></position>
+            <position><% loop $TeamsWithoutAlumni %>$TeamTitle<% if not $Last %>, <% end_if %><% end_loop %></position>
         <% else_if $ClassName == "StaffMember" %>
             <wp:post_type><![CDATA[staffmembercustom]]></wp:post_type>
             <firstname>$FirstName</firstname>
@@ -214,6 +222,11 @@
         <% if $Tags %>
             <% loop $Tags %>
                 <category domain="post_tag" nicename="$URLSegment"><![CDATA[$Title]]></category>
+            <% end_loop %>
+        <% end_if %>
+        <% if $StaffTeams %>
+            <% loop $StaffTeams %>
+                <category domain="post_tag" nicename="$URLSegment"><![CDATA[$Name]]></category>
             <% end_loop %>
         <% end_if %>
 
