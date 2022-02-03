@@ -226,7 +226,7 @@
         <% end_if %>
         <% if $Teams %>
             <% loop $Teams %>
-                <category domain="post_tag" nicename="$URLSegment"><![CDATA[$Name]]></category>
+                <category domain="category" nicename="$URLSegment"><![CDATA[$Name]]></category>
             <% end_loop %>
         <% end_if %>
 
