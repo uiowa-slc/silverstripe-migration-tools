@@ -28,11 +28,12 @@
     <% end_loop %>
 
     <% loop $AllStaffTeams %>
-        <wp:tag>
-            <wp:term_id>$ID</wp:term_id>
-            <wp:tag_slug><![CDATA[$URLSegment]]></wp:tag_slug>
-            <wp:tag_name><![CDATA[$Name]]></wp:tag_name>
-        </wp:tag>
+    <wp:category>
+        <wp:term_id>$ID</wp:term_id>
+        <wp:category_nicename><![CDATA[$URLSegment]]></wp:category_nicename>
+        <wp:category_parent><![CDATA[]]></wp:category_parent>
+        <wp:cat_name><![CDATA[$Name]]></wp:cat_name>
+    </wp:category>
     <% end_loop %>
 
 <%--     <% loop $TagsCats %>
