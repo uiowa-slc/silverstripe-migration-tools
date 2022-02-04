@@ -35,12 +35,6 @@
         <wp:cat_name><![CDATA[$Name]]></wp:cat_name>
     </wp:category>
     <% end_loop %>
-    <wp:category>
-        <wp:term_id>9</wp:term_id>
-        <wp:category_nicename><![CDATA[current-staff]]></wp:category_nicename>
-        <wp:category_parent><![CDATA[]]></wp:category_parent>
-        <wp:cat_name><![CDATA[Current Staff]]></wp:cat_name>
-    </wp:category>
 <%--     <% loop $TagsCats %>
     <wp:term>
         <wp:term_id>$Pos</wp:term_id>
@@ -232,7 +226,6 @@
             <% if $isAlumn %>
                 <category domain="category" nicename="alumni"><![CDATA[Alumni]]></category>
             <% else %>
-                <category domain="category" nicename="current-staff"><![CDATA[Current Staff]]></category>
                 <% loop $Teams %>
                     <category domain="category" nicename="$URLSegment"><![CDATA[$Name]]></category>
                 <% end_loop %>
