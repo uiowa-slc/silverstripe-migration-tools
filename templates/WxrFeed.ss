@@ -35,7 +35,12 @@
         <wp:cat_name><![CDATA[$Name]]></wp:cat_name>
     </wp:category>
     <% end_loop %>
-
+    <wp:category>
+        <wp:term_id>9</wp:term_id>
+        <wp:category_nicename><![CDATA[current-staff]]></wp:category_nicename>
+        <wp:category_parent><![CDATA[]]></wp:category_parent>
+        <wp:cat_name><![CDATA[Current Staff]]></wp:cat_name>
+    </wp:category>
 <%--     <% loop $TagsCats %>
     <wp:term>
         <wp:term_id>$Pos</wp:term_id>
@@ -195,7 +200,9 @@
             <firstname>$FirstName</firstname>
             <lastname>$Surname</lastname>
             <phone>$StaffPhoneNumber</phone>
-            <email>$StaffEmailAddress</email>
+            <% if not $isAlumn %>
+                <email>$StaffEmailAddress</email>
+            <% end_if %>
             <position>$StaffPosition</position>
         <% else %>
             <wp:post_type><![CDATA[page]]></wp:post_type>
@@ -222,9 +229,14 @@
             <% end_loop %>
         <% end_if %>
         <% if $Teams %>
-            <% loop $Teams %>
-                <category domain="category" nicename="$URLSegment"><![CDATA[$Name]]></category>
-            <% end_loop %>
+            <% if $isAlumn %>
+                <category domain="category" nicename="alumni"><![CDATA[Alumni]]></category>
+            <% else %>
+                <category domain="category" nicename="current-staff"><![CDATA[Current Staff]]></category>
+                <% loop $Teams %>
+                    <category domain="category" nicename="$URLSegment"><![CDATA[$Name]]></category>
+                <% end_loop %>
+            <% end_if %>
         <% end_if %>
         <% if $Tags %>
             <% loop $Tags %>
