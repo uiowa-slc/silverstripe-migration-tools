@@ -190,14 +190,6 @@
                 <email>$EmailAddress</email>
             <% end_if %>
             <position><% loop $TeamsWithoutAlumni %>$TeamTitle<% if not $Last %>, <% end_if %><% end_loop %></position>
-
-        <% else_if $ClassName == "StaffMember" %>
-            <wp:post_type><![CDATA[staffmembercustom]]></wp:post_type>
-            <firstname>$FirstName</firstname>
-            <lastname>$Surname</lastname>
-            <phone>$StaffPhoneNumber</phone>
-            <email>$StaffEmailAddress</email>
-            <position>$StaffPosition</position>
         <% else %>
             <wp:post_type><![CDATA[page]]></wp:post_type>
         <% end_if %>
