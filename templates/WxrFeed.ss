@@ -186,7 +186,9 @@
             <firstname>$FirstName $MiddleName</firstname>
             <lastname>$LastName</lastname>
             <phone>$Phone</phone>
-            <email>$EmailAddress</email>
+            <% if not $inTeam("Alumni") %>
+                <email>$StaffEmailAddress</email>
+            <% end_if %>
             <position><% loop $TeamsWithoutAlumni %>$TeamTitle<% if not $Last %>, <% end_if %><% end_loop %></position>
 
         <% else_if $ClassName == "StaffMember" %>
@@ -194,9 +196,7 @@
             <firstname>$FirstName</firstname>
             <lastname>$Surname</lastname>
             <phone>$StaffPhoneNumber</phone>
-            <% if not $isAlumn %>
-                <email>$StaffEmailAddress</email>
-            <% end_if %>
+            <email>$StaffEmailAddress</email>
             <position>$StaffPosition</position>
         <% else %>
             <wp:post_type><![CDATA[page]]></wp:post_type>
@@ -223,7 +223,7 @@
             <% end_loop %>
         <% end_if %>
         <% if $Teams %>
-            <% if $isAlumn %>
+            <% if $inTeam("Alumni") %>
                 <category domain="category" nicename="alumni"><![CDATA[Alumni]]></category>
             <% else %>
                 <% loop $Teams %>
