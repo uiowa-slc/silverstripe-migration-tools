@@ -189,7 +189,12 @@
             <% if not $inTeam("Alumni") %>
                 <email>$EmailAddress</email>
             <% end_if %>
+            <% if $inTeam("Alumni") %>
             <position><% loop $TeamsWithoutAlumni %>$TeamTitle<% if not $Last %>, <% end_if %><% end_loop %></position>
+
+            <% else %>
+            <position>$Position</position>
+            <% end_if %>
         <% else %>
             <wp:post_type><![CDATA[page]]></wp:post_type>
         <% end_if %>
