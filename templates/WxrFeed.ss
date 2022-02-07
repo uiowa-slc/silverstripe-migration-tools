@@ -187,7 +187,7 @@
             <lastname>$LastName</lastname>
             <phone>$Phone</phone>
             <% if not $inTeam("Alumni") %>
-                <email>$StaffEmailAddress</email>
+                <email>$EmailAddress</email>
             <% end_if %>
             <position><% loop $TeamsWithoutAlumni %>$TeamTitle<% if not $Last %>, <% end_if %><% end_loop %></position>
 
