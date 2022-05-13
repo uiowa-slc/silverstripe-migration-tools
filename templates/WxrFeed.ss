@@ -53,9 +53,9 @@
                     <% if $AdditionalInfo %>$AdditionalInfo<% end_if %>
                 <% end_loop %>
             ]]>
-            <% end_if %>
+       
 
-            <% if $ClassName == "BuildingHoursPage" %>
+            <% else_if $ClassName == "BuildingHoursPage" %>
             <![CDATA[
 
                 <% if $EffectiveStartDate && $EffectiveEndDate %>
@@ -67,9 +67,9 @@
                     <% include BuildingHoursTable %>
                 <% end_loop %>
             ]]>
-            <% end_if %>
+          
 
-            <% if $ClassName == "MeetingRoomHolder" %>
+            <% else_if $ClassName == "MeetingRoomHolder" %>
             <![CDATA[
                 <% if $EffectiveStartDate && $EffectiveEndDate %>
                     <p><em>Effective from $EffectiveStartDate.Nice - $EffectiveEndDate.Nice</em></p>
@@ -80,9 +80,9 @@
                     <% include BuildingHoursTable %>
                 <% end_loop %>
             ]]>
-            <% end_if %>  
+           
 
-            <% if $ClassName == "MeetingRoomPage" %>
+            <% else_if $ClassName == "MeetingRoomPage" %>
             <![CDATA[
                 <% if $Number %>
                     <p style="font-size: 24px;"><strong>Room number:</strong> $Number</p>
@@ -368,6 +368,11 @@
                     <% end_if %>
         
                 <% end_if %>
+            ]]>
+
+            <% else %>
+            <![CDATA[
+                $ContentWxrFiltered.RAW
             ]]>
             <% end_if %>      
 
