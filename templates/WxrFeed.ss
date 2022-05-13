@@ -27,21 +27,6 @@
     </wp:tag>
     <% end_loop %>
 
-<%--     <% loop $TagsCats %>
-    <wp:term>
-        <wp:term_id>$Pos</wp:term_id>
-        <% if $ClassName == "BlogTag" %>
-            <wp:term_taxonomy><![CDATA[tag]]></wp:term_taxonomy>
-        <% else_if $ClassName == "BlogCategory" %>
-            <wp:term_taxonomy><![CDATA[category]]></wp:term_taxonomy>
-        <% end_if %>
-
-        <wp:term_slug><![CDATA[$URLSegment]]></wp:term_slug>
-        <wp:term_parent><![CDATA[]]></wp:term_parent>
-        <wp:term_name><![CDATA[$Title]]></wp:term_name>
-    </wp:term>
-    <% end_loop %> --%>
-
     <% loop $Pages %>
         <item>
         <title>$Title</title>
@@ -50,110 +35,342 @@
         <dc:creator><![CDATA[$Author.AdUsername]]></dc:creator>
         <guid isPermaLink="false">$AbsoluteLink</guid>
         <description></description>
-        <content:encoded><![CDATA[$ContentWxrFiltered.RAW]]><![CDATA[$Policies.RAW]]><![CDATA[$StaffResearch.RAW]]>
-            <![CDATA[<% if $WebsiteLink %><p><a href="$WebsiteLink" class="bttn bttn--primary bttn--caps" target="_blank"><% if $WebsiteLinkButtonText %>$WebsiteLinkButtonText<% else %>Visit Website<% end_if %> <span class="fa-arrow-right fas"></span></a></p><% end_if %>
-                        <% if $FavoriteProject %>
-                            <h2>Favorite SLC project and why?</h2>
-                            $FavoriteProject
-                        <% end_if %>
+        <content:encoded>
 
-                        <% if $Interests %>
-                            <h2>Interests</h2>
-                            $Interests
-                        <% end_if %>
+            <% if $ClassName == "WhoDoesWhatHolder" %>
+            <![CDATA[
+                $ContentWxrFiltered.RAW
+                <% loop AllChildren.Sort('Title') %>
+                    <h2>$MenuTitle</h2>
+                    <p>
+                    <% if $OfficeName %><br />Office Name: $OfficeName<% end_if %>
+                    <% if $OfficeLocation %><br />Location: $OfficeLocation<% end_if %>
+                    <% if $PhoneNumber %><br />Phone Number: $PhoneNumber<% end_if %>
 
+                    <% if $EmailAddress %><br />Email: <a href="mailto:$EmailAddress">$EmailAddress</a><% end_if %>
+                    </p>
+                    <% if $Website %><p><a class="btn" href="$Website" target="_blank">Visit Website</a></p><% end_if %>
+                    <% if $AdditionalInfo %>$AdditionalInfo<% end_if %>
+                <% end_loop %>
+            ]]>
+            <% end_if %>
 
-                        <%-- student --%>
-                        <% if $isStudent %>
-                            <% if $DegreeDescription %>
-                                <h2>Why I chose my degree</h2>
-                                $DegreeDescription
-                            <% end_if %>
-                             <% if $TopStrengths %>
-                                <h2>My top strengths</h2>
-                                $TopStrengths
-                            <% end_if %>
+            <% if $ClassName == "BuildingHoursPage" %>
+            <![CDATA[
 
-                            <% if $MDExperience %>
-                                <h2>What I've learned from my experience at SLC</h2>
-                                $MDExperience
-                            <% end_if %>
+                <% if $EffectiveStartDate && $EffectiveEndDate %>
+                    <p><em>Effective from $EffectiveStartDate.Nice - $EffectiveEndDate.Nice</em></p>
+                <% end_if %>
+                <% loop $Children %>
+                    <h2>$Title</h2>
+                    $ContentWxrFiltered.RAW
+                    <% include BuildingHoursTable %>
+                <% end_loop %>
+            ]]>
+            <% end_if %>
 
-                            <% if $PostGraduation %>
-                                <h2>Plans after graduation</h2>
-                                $PostGraduation
-                            <% end_if %>
-                         <% end_if %>
+            <% if $ClassName == "MeetingRoomHolder" %>
+            <![CDATA[
+                <% if $EffectiveStartDate && $EffectiveEndDate %>
+                    <p><em>Effective from $EffectiveStartDate.Nice - $EffectiveEndDate.Nice</em></p>
+                <% end_if %>
+                <% loop $Children %>
+                    <h2>$Title</h2>
+                    $ContentWxrFiltered.RAW
+                    <% include BuildingHoursTable %>
+                <% end_loop %>
+            ]]>
+            <% end_if %>  
 
-                        <%-- alumni --%>
-                        <% if $inTeam("Alumni") %>
-                            <% if $EmploymentLocation %>
-                                <h2>Where I'm currently employed</h2>
-                                <% if $EmploymentLocationURL %>
-                                    <a href="$EmploymentLocationURL">$EmploymentLocation</a>
-                                <% else %>
-                                    $EmploymentLocation
-                                <% end_if %>
-                            <% end_if %>
+            <% if $ClassName == "MeetingRoomPage" %>
+            <![CDATA[
+                <% if $Number %>
+                    <p style="font-size: 24px;"><strong>Room number:</strong> $Number</p>
+                <% end_if %>
+                <% if $FormerlyKnownAs %>
+                    <p><strong>Formerly known as:</strong> $FormerlyKnownAs</p>
+                <% end_if %>
+                $ContentWxrFiltered.RAW
+            <% if $TablesAndChairsCapacity || $RoundedTablesCapacity || $TheaterCapacity || $ClassroomCapacity || $UshapeCapacity || $BoardroomCapacity || $SocialDistancingCapacity %>
+            
 
-                            <% if $CurrentPosition %>
-                                <h2>My current position title</h2>
-                                $CurrentPosition
+                        <% if $SocialDistancingOnly  %>
+                            <% if SocialDistancingCapacity%>
+                                <h2>Capacity by setup</h2>
+                                <ul>
+                                    <li>
+                                        <strong>Social Distancing:</strong> $SocialDistancingCapacity
+                                    </li>
+                                </ul>
+                
                             <% end_if %>
-
-                            <% if $FavoriteMemory %>
-                                <h2>Favorite memory of SLC</h2>
-                                $FavoriteMemory
+                        <% else %>
+                            <h2>Capacity by setup</h2>
+                            <ul>
+                            <% if $TablesAndChairsCapacity %>
+                            <li>
+                        
+                                <strong>Banquet Rectangles:</strong> $TablesAndChairsCapacity
+                            </li>
                             <% end_if %>
-
-                            <% if $Advice %>
-                                <h2>What advice would you give to current students?</h2>
-                                $Advice
+                            <% if $RoundedTablesCapacity %>
+                            <li>
+                    
+                                <strong>Banquet Rounds:</strong> $RoundedTablesCapacity
+                            </li>
                             <% end_if %>
-                        <% end_if %>
-
-                        <%-- Professional Staff --%>
-
-                        <% if $inTeam("Professional Staff") %>
-                            <% if $EnjoymentFactors %>
-                                <h2>What I enjoy about working at SLC</h2>
-                                $EnjoymentFactors
+                            <% if $TheaterCapacity %>
+                            <li>
+            
+                                <strong>Theater:</strong> $TheaterCapacity
+                            </li>
                             <% end_if %>
-
-                            <% if $JoinDate %>
-                                <h2>When I joined the SLC staff team</h2>
-                                $JoinDate
+                            <% if $ClassroomCapacity %>
+                            <li>
+                                <strong>Classroom:</strong> $ClassroomCapacity
+                            </li>
                             <% end_if %>
-
-                            <% if $Background %>
-                                <h2>Background and education</h2>
-                                $Background
+                            <% if $UshapeCapacity %>
+                            <li>
+                                <strong>U-Shape:</strong> $UshapeCapacity
+                            </li>
                             <% end_if %>
-                        <% end_if %>
-
-                        <% if $FavoriteQuote %>
-                            <h2>Favorite quote</h2>
-                            <blockquote>$FavoriteQuote</blockquote>
-                        <% end_if %>
-                        <% if $InstagramHandle || $TwitterHandle || $LinkedInURL || $GithubURL || $PortfolioURL %>
-                        <ul>
-                            <% if $InstagramHandle %>
-                                <li><a href="http://www.instagram.com/$InstagramHandle/" class="social--instagram">Instagram</a></li>
-                            <% end_if %>
-                            <% if $TwitterHandle %>
-                                <li><a href="http://www.twitter.com/$TwitterHandle/" class="social--twitter">Twitter</a></li>
-                            <% end_if %>
-                            <% if $LinkedInURL %>
-                                <li><a href="$LinkedInURL" class="social--linkedin">LinkedIn</a></li>
-                            <% end_if %>
-                            <% if $GithubURL %>
-                                <li><a href="$GithubURL" class="social--github">Github</a></li>
-                            <% end_if %>
-                            <% if $PortfolioURL %>
-                                <li><a href="$PortfolioURL" class="social--website">Website</a></li>
+                            <% if $BoardroomCapacity %>
+                            <li>
+                                <strong>Board Room:</strong> $BoardroomCapacity
+                            </li>
                             <% end_if %>
                         </ul>
-                        <% end_if %>]]>
+
+                        <% end_if %>
+                    </div>
+                    <% end_if %>
+                 
+
+                    <% if $HasComputer || $HasEthernetConnection || $HasProjectorScreen || $HasProjector || $HasDVD || $HasBluRay || $HasSpeakers || $HasMarkerboard || $HasMicrophone || $HasWifi || $HasElectricPiano|| $ComplimentaryEquipmentProvided %>
+
+                    
+                        <h2>Equipment</h2>
+                        <ul>
+                            <% if $HasComputer %>
+                                <li>
+        
+                                    Computer
+                                </li>
+                            <% end_if %>
+                            <% if $HasEthernetConnection %>
+                                <li>
+
+                                    Ethernet connection
+                                </li>
+                            <% end_if %>
+                            <% if $HasProjectorScreen %>
+                                <li>
+                        
+                                    Projector screen
+                                </li>
+                            <% end_if %>
+                            <% if $HasProjector %>
+                                <li>
+                        
+                                    Projector
+                                </li>
+                            <% end_if %>
+                            <% if $HasDVD %>
+                                <li>
+                
+                                    DVD player
+                                </li>
+                            <% end_if %>
+                            <% if $HasBluRay %>
+                                <li>
+                    
+                                    Blu-ray player
+                                </li>
+                            <% end_if %>
+                            <% if $HasSpeakers %>
+                                <li>
+            
+                                    Speakers
+                                </li>
+                            <% end_if %>
+                            <% if $HasMarkerboard %>
+                                <li>
+
+                                    Markerboard
+                                </li>
+                            <% end_if %>
+                            <% if $HasMicrophone %>
+                                <li>
+                    
+                                    Microphone
+                                </li>
+                            <% end_if %>
+                            <% if $HasWifi %>
+                                <li>
+                
+                                    Wifi
+                                </li>
+                            <% end_if %>
+                            <% if $HasElectricPiano %>
+                                <li>
+                        
+                                    Electric piano
+                                </li>
+                            <% end_if %>
+                            <% if $ComplimentaryEquipmentProvided %>
+                                <li>
+                
+                                    Complimentary items*
+                                </li>
+                            <% end_if %>
+                        </ul>
+    
+                    <% end_if %>
+
+                    <% if $StudentRate || $FacultyRate || $GeneralRate %>
+        
+                        <h2>Rates</h2>
+                        <ul>
+                        <% if $StudentRate %>
+                            <li>
+                                <strong>UI student organization events:</strong>
+                                <span class="dolla_dolla_bill">
+                                    $StudentRate
+                                </span>
+                            </li>
+                        <% end_if %>
+
+                        <% if $FacultyRate %>
+                            <li>
+                                <strong>UI departmental events:</strong>                <span class="dolla_dolla_bill">
+                                    $FacultyRate
+                                </span>
+
+                            </li>
+                        <% end_if %>
+
+                        <% if $GeneralRate %>
+                            <li>
+                                <strong>General public events:</strong>                             <span class="dolla_dolla_bill">
+                                    $GeneralRate
+                                </span>
+
+                            </li>
+                        <% end_if %>
+                        </ul>
+                    
+                    <% end_if %>
+
+        
+
+                    <% if $ContactInfo %>
+                        <h2>Contact information</h2>
+                        <p>$ContactInfo</p>
+                    <% else_if $Parent.ID == 417 %>
+                        <p>Make a reservation for this space by calling 319-335-3114 or emailing <a href="mailto:imu-eventservices@uiowa.edu">imu-eventservices@uiowa.edu</a>.</p>
+                    <% else %>
+                        <a href="event-services/reservations/" class="button button--large">Make a reservation</a>
+                    <% end_if %>
+                
+
+
+                    <% if $ComplimentaryEquipmentProvided %>
+                        <p>*Some items are provided in fee rooms in limited amounts for no charge: for a full list see our <a href="event-services/fees/"> A/V, Equipment, and Services page.  </p></a>
+                    <% end_if %>
+
+                    <% if $SocialDistancingOnly  %>
+                        <p class="standard_setup_notice">Due to social distancing guidelines, the meeting room configuration and capacity cannot be changed.</p>
+                    <% else %>
+                        <% if $StandardCapacity && $ShowSetupChangeFee && $SetupChangeFee %>
+                            <p class="standard_setup_notice">
+                                * denotes a room's standard setup. Minimum setup change fee: 
+                                <strong>$SetupChangeFee</strong>.
+                            </p>
+                        <% end_if %>
+                    <% end_if %>
+            
+                <% if $ShowRoomLayout %>
+                <h2>Available setups for {$Title}:</h2>
+
+
+                    
+                    <% if $TablesAndChairsCapacity %>
+
+                        <img src="{$ThemeDir}/dist/images/room-setups/tables.png" alt="tables">
+                        <h3>Banquet Rectangles</h3>
+                        <p>
+                            <strong> Capacity: </strong> $TablesAndChairsCapacity
+                        </p>
+                        
+    
+                    <% end_if %>
+
+                    <% if $RoundedTablesCapacity %>
+        
+
+                            <img src="{$ThemeDir}/dist/images/room-setups/roundTables.png" alt="roundTables">
+
+                        <h3>Banquet Rounds</h3>
+                        <p>
+                            <strong> Capacity: </strong> $RoundedTablesCapacity
+                        </p>
+                    
+            
+                    <% end_if %>
+
+                    <% if $TheaterCapacity %>
+                
+                            <img src="{$ThemeDir}/dist/images/room-setups/theater.png" alt="theater">
+
+                        <h3>Theater</h3>
+                        <p>
+                            <strong> Capacity: </strong> $TheaterCapacity
+                        </p>
+                    
+            
+                    <% end_if %>
+
+                    <% if $ClassroomCapacity %>
+            
+
+                            <img src="{$ThemeDir}/dist/images/room-setups/classroom.png" alt="classroom">
+
+                        <h3>Classroom</h3>
+                        <p>
+                            <strong> Capacity: </strong> $ClassroomCapacity
+                        </p>
+                    
+            
+                    <% end_if %>                                
+
+                    <% if $UshapeCapacity %>
+                
+
+                        <img src="{$ThemeDir}/dist/images/room-setups/Ushape.png" alt="Ushape">
+                        <h3>U-Shape</h3>
+                        <p>
+                            <strong> Capacity: </strong> $UshapeCapacity
+                        </p>
+                    
+            
+                    <% end_if %>
+
+                    <% if $BoardroomCapacity %>
+                
+                        <img src="{$ThemeDir}/dist/images/room-setups/boardRoom.png" alt="boardRoom">
+                        <h3>Board Room</h3>
+                        <p>
+                            <strong> Capacity: </strong> $BoardroomCapacity
+                        </p>
+                    
+        
+                    <% end_if %>
+        
+                <% end_if %>
+            ]]>
+            <% end_if %>      
+
         </content:encoded>
         <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
         <excerpt:encoded><% if $MetaDescription %><![CDATA[$MetaDescription]]><% else %><![CDATA[$ContentWxrFiltered.Summary.RAW]]><% end_if %></excerpt:encoded>
@@ -191,20 +408,6 @@
         <% end_if %>
         <path>$Path</path>
 
-        <wp:post_password><![CDATA[]]></wp:post_password>
-        <wp:is_sticky>0</wp:is_sticky>
-
-<%--         <% if $ImageLookup %>
-             <wp:attachment_url><![CDATA[$ImageLookup.FitMax(2592,1458).AbsoluteURL]]></wp:attachment_url>
-                                                        <wp:postmeta>
-                    <wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key>
-                    <wp:meta_value><![CDATA[$ImageLookup.FitMax(2592,1458).AbsoluteURL]]></wp:meta_value>
-                    </wp:postmeta>
-                                        <wp:postmeta>
-                    <wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key>
-                    <wp:meta_value><![CDATA[a:5:{s:5:"width";i:$$ImageLookup.FitMax(2592,1458).Width;s:6:"height";i:$ImageLookup.FitMax(2592,1458).Height;s:4:"file";s:26:"$URL";a:0:{}}]]></wp:meta_value>
-                    </wp:postmeta>
-        <% end_if %> --%>
         <% if $Categories %>
             <% loop $Categories %>
                 <category domain="category" nicename="$URLSegment"><![CDATA[$Title]]></category>

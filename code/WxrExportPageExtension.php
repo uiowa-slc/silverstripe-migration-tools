@@ -28,7 +28,7 @@ class WxrExportPageExtension extends DataExtension {
 
         $contentFiltered = $parser->parse($content);
         $contentFiltered = str_replace('href="/assets/', 'href="/sites/'.$domain.'/files/imports/', $contentFiltered);
-
+        $contentFiltered = str_replace('&nbsp;', ' ', $contentFiltered);
         return $contentFiltered;
 
 
