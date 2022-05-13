@@ -67,6 +67,35 @@
                     <% include BuildingHoursTable %>
                 <% end_loop %>
             ]]>
+
+            <% else_if $ClassName == "BuildingHoursHolder" %>
+                    <% if $ActiveHoursPages %>
+                        <% with $ActiveHoursPages.First %>
+                            <h2>$Title</h2>
+                            
+                            <% if $EffectiveStartDate && $EffectiveEndDate %>
+                                <p><em>Effective from $EffectiveStartDate.Nice - $EffectiveEndDate.Nice</em></p>
+                            <% end_if %>
+
+                            <div>
+                                <p>Jump to:</p>
+                                <ul>
+                                    <% loop $Children %>
+                                        <li><a href="#{$URLSegment}">$Title</a></li>
+                                    <% end_loop %>
+                                </ul>
+                            </div>
+                            <% loop $Children %>
+                                <h3 id="$URLSegment">$Title</h3>
+                                $Content
+                                <% include BuildingHoursTable %>
+                                <% if not $Last %>
+                                    <hr />
+                                <% end_if %>
+                            <% end_loop %>
+                        <% end_with %>
+                    <% end_if %>
+                $AfterContentConst
           
 
             <% else_if $ClassName == "MeetingRoomHolder" %>
