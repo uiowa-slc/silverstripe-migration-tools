@@ -69,6 +69,7 @@
             ]]>
 
             <% else_if $ClassName == "BuildingHoursHolder" %>
+            <![CDATA[
                     <% if $ActiveHoursPages %>
                         <% with $ActiveHoursPages.First %>
                             <h2>$Title</h2>
@@ -96,7 +97,8 @@
                         <% end_with %>
                     <% end_if %>
                 $AfterContentConst
-          
+            ]]>
+
 
             <% else_if $ClassName == "MeetingRoomHolder" %>
             <![CDATA[
