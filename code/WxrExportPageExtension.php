@@ -30,7 +30,7 @@ class WxrExportPageExtension extends DataExtension {
         $contentFiltered = str_replace('href="/assets/', 'href="/sites/'.$domain.'/files/imports/', $contentFiltered);
         $contentFiltered = str_replace('&nbsp;', ' ', $contentFiltered);
         $contentFiltered = str_replace('/wxrExport#', '#', $contentFiltered);
-        
+
         return $contentFiltered;
 
 
@@ -72,6 +72,8 @@ class WxrExportPageExtension extends DataExtension {
     }
 
     public function ImageLookup(){
+
+
         $page = $this->owner->data();
         $images = new ArrayList();
 
