@@ -462,7 +462,7 @@
 <% loop $Images %>
     <image>
         <title>$Alt</title>
-        <wp:post_id>$PostID</wp:post_id>
+        <wp:post_id>$Hash</wp:post_id>
         <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
         <pubDate>$Created</pubDate>
     </image>
@@ -471,7 +471,7 @@
 <% loop $Files %>
     <file>
         <title>$Title</title>
-        <wp:post_id>$PostID</wp:post_id>
+        <wp:post_id>$Hash</wp:post_id>
         <wp:attachment_url>$AbsoluteURL</wp:attachment_url>
         <relative_url>$RelativeURL</relative_url>
         <pubDate>$Created</pubDate>

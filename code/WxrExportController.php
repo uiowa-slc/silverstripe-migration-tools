@@ -127,6 +127,7 @@ class WxrExportController extends ContentController {
                         $proxyImageObject->AbsoluteURL = $ssImage->getAbsoluteURL();
                         $relUrl = $ssImage->getURL();
                         $relUrl = ltrim($relUrl, '/assets/');
+                        $proxyImageObject->Hash = hash('ripemd160',$relUrl);
                         $proxyImageObject->RelativeURL = $relUrl;
                         // $proxyImageObject->RelativeURL = 'assets/'.$ssImage->ImageImagename;
                         $proxyImageObject->Alt = $ssImage->Title;
@@ -187,6 +188,7 @@ class WxrExportController extends ContentController {
                         $proxyObject->AbsoluteURL = $pageImage->FitMax(2592,1458)->getAbsoluteURL();
                         $proxyObject->Alt = $pageImage->Title;
                         $proxyObject->Created = $pageImage->Created;
+                        $proxyObject->Hash = hash('ripemd160',$pageImage->Created);
                         $attachments->push($proxyObject);
                     }
                 }
@@ -260,6 +262,7 @@ class WxrExportController extends ContentController {
                     $proxyFileObject->AbsoluteURL = $ssFile->getAbsoluteURL();
                     $relUrl = $ssFile->getURL();
                     $relUrl = ltrim($relUrl, '/assets/');
+                    $proxyFileObject->Hash = hash('ripemd160', $relUrl);
                     $proxyFileObject->RelativeURL = $relUrl;
                     // $proxyFileObject->RelativeURL = 'assets/'.$ssFile->FileFilename;
                     $proxyFileObject->Alt = $ssFile->Title;
