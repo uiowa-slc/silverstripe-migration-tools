@@ -86,7 +86,7 @@ class WxrExportController extends ContentController {
         //     'ClassName:PartialMatch:not' => 'HomePage',
         //     'ClassName:PartialMatch:not' => 'UtilityPage',
         // ];
-        $pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'RedirectorPage')->exclude('ClassName:PartialMatch', 'BuildingDepartment')->exclude('ClassName:PartialMatch', 'BuildingHoursPage');
+        $pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'RedirectorPage')->exclude('ClassName:PartialMatch', 'BuildingDepartment')->exclude('ClassName:PartialMatch', 'CalendarEvent')->exclude('ClassName:PartialMatch', 'SiteTree');
  
 
         if(isset($getVars["notopics"])){
@@ -168,7 +168,7 @@ class WxrExportController extends ContentController {
 
 
             foreach($versionedPages as $versionedPage){
-
+                //print_r($versionedPage->ID.' ');
                 $pageImages = $versionedPage->ImageLookup();
 
 
