@@ -39,17 +39,7 @@
 
             <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
              <% if $Credits %>
-                <p>
-                    <%t SilverStripe\\Blog\\Model\\Blog.By "by" %>
-
-                    <% loop $Credits %>
-                        <% if not $First && not $Last %>, <% end_if %>
-                        <% if not $First && $Last %> <%t SilverStripe\\Blog\\Model\\Blog.AND "and" %> <% end_if %>
-
-                            $Name.XML
-
-                    <% end_loop %>
-                </p>
+                <p>By <% loop $Credits %>$Name.XML<% if not $Last %>, <% end_if %><% end_loop %></p>
                 <% end_if %>
                 <![CDATA[
                     $ContentWxrFiltered.RAW
