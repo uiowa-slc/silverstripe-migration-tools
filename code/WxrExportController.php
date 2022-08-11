@@ -251,7 +251,7 @@ class WxrExportController extends ContentController {
         $attachments->removeDuplicates('PostID');
 
         $files = new ArrayList();
-        $ssFiles = File::get()->filter(array('ClassName' => 'SilverStripe\Assets\File'))->exclude(array('FileFilename:PartialMatch' => 'SecureUploads'))->exclude(array('FileFilename:PartialMatch' => 'Resume'))->exclude(array('UserFormUpload' => 't'))->exclude(array('Name:PartialMatch' => '.mp3'))->exclude(array('Name:PartialMatch' => '.m4a'));
+        $ssFiles = File::get()->filter(array('ClassName' => 'SilverStripe\Assets\File'))->exclude(array('FileFilename:PartialMatch' => 'SecureUploads'))->exclude(array('FileFilename:PartialMatch' => 'Resume'))->exclude(array('UserFormUpload' => 't'))->exclude(array('Name:PartialMatch' => 'mp3'))->exclude(array('Name:PartialMatch' => 'm4a'))->exclude(array('Name:PartialMatch' => 'wav'));
         foreach($ssFiles as $ssFile){
                 if($ssFile->getAbsoluteURL()){
                     $proxyFileObject = new DataObject();
