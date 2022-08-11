@@ -86,7 +86,7 @@ class WxrExportController extends ContentController {
         //     'ClassName:PartialMatch:not' => 'HomePage',
         //     'ClassName:PartialMatch:not' => 'UtilityPage',
         // ];
-        $pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'RedirectorPage')->exclude('ClassName:PartialMatch', 'BuildingDepartment')->exclude('ClassName:PartialMatch', 'CalendarEvent')->exclude('ClassName:PartialMatch', 'SiteTree');
+        $pages = SiteTree::get()->exclude('ClassName:PartialMatch', 'ErrorPage')->exclude('ClassName:PartialMatch', 'UtilityPage')->exclude('ClassName:PartialMatch', 'RedirectorPage')->exclude('ClassName:PartialMatch', 'BuildingDepartment')->exclude('ClassName:PartialMatch', 'ShowPage');
  
 
         if(isset($getVars["notopics"])){
