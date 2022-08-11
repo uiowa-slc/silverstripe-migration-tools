@@ -38,10 +38,11 @@
         <content:encoded>
 
             <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
+            <![CDATA[
              <% if $Credits %>
                 <p>By <% loop $Credits %>$Name.XML<% if not $Last %>, <% end_if %><% end_loop %></p>
                 <% end_if %>
-                <![CDATA[
+             
                     $ContentWxrFiltered.RAW
                 ]]>
             <% else %>
