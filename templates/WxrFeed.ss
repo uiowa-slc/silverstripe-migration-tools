@@ -52,7 +52,7 @@
 
         </content:encoded>
         <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
-        <excerpt:encoded><% if $MetaDescription %><![CDATA[$MetaDescription]]><% else %><![CDATA[$ContentWxrFiltered.Summary.RAW]]><% end_if %></excerpt:encoded>
+        <excerpt:encoded><![CDATA[$ContentWxrFiltered.Summary.RAW]]></excerpt:encoded>
         <% end_if %>
         <wp:post_id>$ID</wp:post_id>
 
