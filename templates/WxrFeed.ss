@@ -28,6 +28,7 @@
     <% end_loop %>
 
     <% loop $Pages %>
+        <% if not $AudioClip %>
         <item>
         <title>$Title</title>
         <link>$AbsoluteLink</link>
@@ -100,7 +101,7 @@
         <% end_if %>
 
         </item>
-
+        <% end_if %>
 <% end_loop %>
 
 <% loop $Images %>
