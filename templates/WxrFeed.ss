@@ -43,46 +43,37 @@
                 <% if $DonorByline %>
                     <p>$DonorByline</p>
                 <% end_if %>
-       
-                <% if $HostedBy %>
-                    <p>
-                        <strong>Hosted by:</strong> $HostedBy
-                    </p>
-                <% end_if %>
                 <p>
-                <strong><% if $Cancelled %>Originally scheduled for:<% else %> Date:<% end_if %></strong> $EventDate.Format("MMMM d, Y"), $Time
-                </p>
-                <% if $Location %>
-                    <p>
-                        <strong>Location:</strong> $Location
-                    </p>
+                <% if $HostedBy %>
+                    
+                        <strong>Hosted by:</strong> $HostedBy <br />
+           
                 <% end_if %>
-                <% if $StreamingLink && $isFuture %>
-                    <p>
-                        <% include StreamButton %>
-                    </p>
+
+                <strong><% if $Cancelled %>Originally scheduled for:<% else %> Date:<% end_if %></strong> $EventDate.Format("MMMM d, Y"), $Time <br />
+              
+                <% if $Location %>
+       
+                        <strong>Location:</strong> $Location <br />
+       
                 <% end_if %>
 
                 <% if $Partnership %>
-                    <p>
-                        <strong>In partnership with:</strong> $Partnership
-                    </p>
+              
+                        <strong>In partnership with:</strong> $Partnership <br />
+           
                 <% end_if %>
                 <% if $Donations %>
-                    <p>
-                        <strong>Support provided by:</strong> $Donations
-                    </p>
+                
+                        <strong>Support provided by:</strong> $Donations <br />
+                 
                 <% end_if %>
                  <% if $SponsoredBy %>
-                    <p>
-                        <strong>Sponsored by:</strong> $SponsoredBy
-                    </p>
+             
+                        <strong>Sponsored by:</strong> $SponsoredBy <br />
+     
                 <% end_if %> 
-   
-
-            <% if $TicketingInfo && $isFuture %>
-                $TicketingInfo
-            <% end_if %>
+                </p>
             $ContentWxrFiltered.RAW
                 ]]>
             <% else_if $ClassName == "LectureHolderPage" %>
