@@ -63,17 +63,18 @@
                         <strong>In partnership with:</strong> $Partnership <br />
            
                 <% end_if %>
+            </p>
+
                 <% if $Donations %>
                 
-                        <strong>Support provided by:</strong> $Donations <br />
-                 
+                    <p><strong>Support provided by:</strong></p>
+                    $Donations
                 <% end_if %>
                  <% if $SponsoredBy %>
-             
-                        <strong>Sponsored by:</strong> $SponsoredBy <br />
-     
+                    <p><strong>Sponsored by:</strong></p>
+                     $SponsoredBy
                 <% end_if %> 
-                </p>
+           
             $ContentWxrFiltered.RAW
                 ]]>
             <% else_if $ClassName == "LectureHolderPage" %>
