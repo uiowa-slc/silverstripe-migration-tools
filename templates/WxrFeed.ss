@@ -44,6 +44,7 @@
                     <p>$DonorByline</p>
                 <% end_if %>
                 <p>
+                 <% if $Featuring %>$Featuring <br /><% end_if %>
                 <% if $HostedBy %>
                     
                         <strong>Hosted by:</strong> $HostedBy <br />
@@ -76,6 +77,10 @@
                 <% end_if %> 
            
             $ContentWxrFiltered.RAW
+
+                <% if $Donors %>
+                    <p>This lecture made possible by <% loop $Donors %><a href="$Link">$Title</a><% if not $Last %>, <% end_if %><% end_loop %>.</p>
+                <% end_if %>
                 ]]>
             <% else_if $ClassName == "LectureHolderPage" %>
             <![CDATA[
