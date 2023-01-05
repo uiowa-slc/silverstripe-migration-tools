@@ -28,9 +28,8 @@
     <% end_loop %>
 
     <% loop $Pages %>
-        <% if not $AudioClip %>
         <item>
-        <title>$Title</title>
+        <title><% if $LectureTitle %>$LectureTitle <% if $Lecturer %> - $Lecturer<% end_if %><% else_if $Lecturer %>$Lecturer<% else %>$Title<% end_if %></title>
         <link>$AbsoluteLink</link>
         <pubDate>$LastEdited</pubDate>
         <dc:creator><![CDATA[$Author.AdUsername]]></dc:creator>
@@ -38,14 +37,78 @@
         <description></description>
         <content:encoded>
 
-            <% if $ClassName == "SilverStripe\Blog\Model\BlogPost" %>
+            <% if $ClassName == "LecturePage" %>
             <![CDATA[
-             <% if $Credits %>
-                <p>By <% loop $Credits %>$Name.XML<% if not $Last %>, <% end_if %><% end_loop %></p>
-                <% end_if %>
              
-                    $ContentWxrFiltered.RAW
+                <% if $DonorByline %>
+                    <p>$DonorByline</p>
+                <% end_if %>
+       
+                <% if $HostedBy %>
+                    <p>
+                        <strong>Hosted by:</strong> $HostedBy
+                    </p>
+                <% end_if %>
+                <p>
+                <strong><% if $Cancelled %>Originally scheduled for:<% else %> Date:<% end_if %></strong> $EventDate.Format("MMMM d, Y"), $Time
+                </p>
+                <% if $Location %>
+                    <p>
+                        <strong>Location:</strong> $Location
+                    </p>
+                <% end_if %>
+                <% if $StreamingLink && $isFuture %>
+                    <p>
+                        <% include StreamButton %>
+                    </p>
+                <% end_if %>
+
+                <% if $Partnership %>
+                    <p>
+                        <strong>In partnership with:</strong> $Partnership
+                    </p>
+                <% end_if %>
+                <% if $Donations %>
+                    <p>
+                        <strong>Support provided by:</strong> $Donations
+                    </p>
+                <% end_if %>
+                 <% if $SponsoredBy %>
+                    <p>
+                        <strong>Sponsored by:</strong> $SponsoredBy
+                    </p>
+                <% end_if %> 
+   
+
+            <% if $TicketingInfo && $isFuture %>
+                $TicketingInfo
+            <% end_if %>
+            $ContentWxrFiltered.RAW
                 ]]>
+            <% else_if $ClassName == "LectureHolderPage" %>
+            <![CDATA[
+                <ul>
+                    <% loop $Years %>
+                        <% if $Year %>
+                            <li>$Year
+                                <ul>
+                                <% loop $Lectures %>
+                                    <% if $LectureTitle %>
+                                        <li>
+                                            <a href="$Link">$LectureTitle.RAW - $Lecturer </a>
+                                        </li>
+                                    <% else %>
+                                        <li>
+                                            <a href="$Link">$Lecturer</a>
+                                        </li>
+                                    <% end_if %>
+                                <% end_loop %>
+                                </ul>
+                            </li>
+                        <% end_if %>
+                    <% end_loop %>
+                </ul>
+            ]]>
             <% else %>
             <![CDATA[
                 $ContentWxrFiltered.RAW
@@ -101,7 +164,7 @@
         <% end_if %>
 
         </item>
-        <% end_if %>
+
 <% end_loop %>
 
 <% loop $Images %>
