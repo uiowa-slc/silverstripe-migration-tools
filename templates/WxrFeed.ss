@@ -29,7 +29,7 @@
 
     <% loop $Pages %>
         <item>
-        <title><% if $LectureTitle %>$LectureTitle <% if $Lecturer %> - $Lecturer<% end_if %><% else_if $Lecturer %>$Lecturer<% else %>$Title<% end_if %></title>
+        <title><% if $Artist %>$Artist<% else %>$Title<% end_if %></title>
         <link>$AbsoluteLink</link>
         <pubDate>$LastEdited</pubDate>
         <dc:creator><![CDATA[$Author.AdUsername]]></dc:creator>
@@ -37,66 +37,29 @@
         <description></description>
         <content:encoded>
 
-            <% if $ClassName == "LecturePage" %>
+            <% if $ClassName == "Show" %>
             <![CDATA[
              
-                <% if $DonorByline %>
-                    <p>$DonorByline</p>
-                <% end_if %>
-                <p>
-                 <% if $Featuring %>$Featuring <br /><% end_if %>
-                <% if $HostedBy %>
-                    
-                        <strong>Hosted by:</strong> $HostedBy <br />
-           
-                <% end_if %>
 
-                <strong><% if $Cancelled %>Originally scheduled for:<% else %> Date:<% end_if %></strong> $EventDate.Format("MMMM d, Y"), $Time <br />
-              
-                <% if $Location %>
-       
-                        <strong>Location:</strong> $Location <br />
-       
-                <% end_if %>
-
-                <% if $Partnership %>
-              
-                        <strong>In partnership with:</strong> $Partnership <br />
-           
-                <% end_if %>
-            </p>
-
-                <% if $Donations %>
-                
-                    <p><strong>Support provided by:</strong></p>
-                    $Donations
-                <% end_if %>
-                 <% if $SponsoredBy %>
-                    <p><strong>Sponsored by:</strong></p>
-                     $SponsoredBy
-                <% end_if %> 
            
             $ContentWxrFiltered.RAW
 
-                <% if $Donors %>
-                    <p>This lecture made possible by <% loop $Donors %><a href="$Link">$Title</a><% if not $Last %>, <% end_if %><% end_loop %>.</p>
-                <% end_if %>
                 ]]>
-            <% else_if $ClassName == "LectureHolderPage" %>
+            <% else_if $ClassName == "ShowHolder" %>
             <![CDATA[
                 <ul>
                     <% loop $Years %>
                         <% if $Year %>
                             <li>$Year
                                 <ul>
-                                <% loop $Lectures %>
-                                    <% if $LectureTitle %>
+                                <% loop $Children %>
+                                    <% if $Artist %>
                                         <li>
-                                            <a href="$Link">$LectureTitle.RAW - $Lecturer </a>
+                                            <a href="$Link">$Artist.RAW </a>
                                         </li>
                                     <% else %>
                                         <li>
-                                            <a href="$Link">$Lecturer</a>
+                                            <a href="$Link">$Title</a>
                                         </li>
                                     <% end_if %>
                                 <% end_loop %>
