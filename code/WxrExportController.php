@@ -97,15 +97,21 @@ class WxrExportController extends ContentController {
         }
 
         // print_r($pages->toArray());
-        foreach ($pages as $page) {
-            //$versionedPage = $page->VersionsList()->sort('Version DESC')->First();
-            $versionedPageId = Versioned::get_versionnumber_by_stage(get_class($page), 'Live', $page->ID);
-            $versionedPage = $page->VersionsList()->filter(array('Version' => $versionedPageId))->First();
 
-            //if a versioned page is orphaned/doesn't have an original page (aka the page has been nuked/archived)
-            if(isset($versionedPage->RecordID)){
-                $versionedPages->push($versionedPage);
-            }
+
+        foreach ($pages as $page) {
+            
+        
+            $versionedPages->push($page);
+                // Disabled latest page versions for SCOPE since its versioned table is screwed up:
+            //$versionedPage = $page->VersionsList()->sort('Version DESC')->First();
+            // $versionedPageId = Versioned::get_versionnumber_by_stage(get_class($page), 'Live', $page->ID);
+            // $versionedPage = $page->VersionsList()->filter(array('Version' => $versionedPageId))->First();
+
+            // //if a versioned page is orphaned/doesn't have an original page (aka the page has been nuked/archived)
+            // if(isset($versionedPage->RecordID)){
+            //     $versionedPages->push($versionedPage);
+            // }
 
 
 
