@@ -55,7 +55,7 @@
                         <% if $Year %>
                             <li>$Year
                                 <ul>
-                                <% loop $Children %>
+                                <% loop $Shows %>
                                     <% if $Artist %>
                                         <li>
                                             <a href="$Link">$Artist.RAW </a>
