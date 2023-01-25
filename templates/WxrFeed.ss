@@ -46,6 +46,25 @@
              
                     $ContentWxrFiltered.RAW
                 ]]>
+            <% else_if ClassName == "PolicyHolder" %>
+            <![CDATA[
+                <% if $PolicyYear %>
+                    <p> Note: These policies are from the <strong>$PolicyYear academic year</strong>. Some policies that reside on other websites have not been archived. <br /><a href="/policies/" class="btn">View current policies &rarr;</a></p>
+                <% end_if %>
+
+                $ContentWxrFiltered.RAW
+
+                $Policies
+                 ]]>
+            <% else_if ClassName == "PolicyPage" %>
+            <![CDATA[
+                <% if $Parent.PolicyYear %>
+                    <p> Note: These policies are from the <strong>$Parent.PolicyYear academic year</strong>. Some policies that reside on other websites have not been archived. <br /><a href="/policies/" class="btn">View current policies &rarr;</a></p>
+                <% end_if %>
+                
+                $ContentWxrFiltered.RAW
+
+            ]]>
             <% else %>
             <![CDATA[
                 $ContentWxrFiltered.RAW
