@@ -46,6 +46,32 @@
              
                     $ContentWxrFiltered.RAW
                 ]]>
+            <% else_if $ClassName == "NewsEntry" %>
+            <![CDATA[
+            <% if $FeaturedImageCaption %>
+                <p class="featured-image-caption">Image caption: $FeaturedImageCaption</p>
+            <% end_if %>
+                <% if $Credits %><p>By <% loop $Credits %><% if not $First && not $Last %>, <% end_if %><% if not $First && $Last %><span class="byline__and">&nbsp;and </span><% end_if %><span class="byline__author">$Name.XML</span><% end_loop %></p>
+                    <% end_if %>
+                    <% if not $Credits && $StoryBy %>
+                        <p><span class="byline__by">By </span>
+                        <% if $StoryByEmail %>
+                            <a href="mailto:$StoryByEmail">$StoryBy</a><% if $StoryByTitle || $StoryByDept %>,<% end_if %>
+                        <% else %>
+                            $StoryBy<% if $StoryByTitle || $StoryByDept %>,<% end_if %>
+                        <% end_if %>
+                        <% if $StoryByTitle %>$StoryByTitle<% end_if %>
+                        <% if $StoryByDept %>$StoryByDept<% end_if %>
+                        </p>
+                    <% end_if %>
+                    <% if $PhotosBy %><span class="byline__media">Media by <% if $PhotosByEmail %><a href="mailto:$PhotosByEmail">$PhotosBy</a><% else %>$PhotosBy<% end_if %></span><% end_if %>
+                <% if $ExternalURL %>
+                    <p><a class="bttn bttn--caps bttn--primary" href="$ExternalURL">Read this story on Iowa Nowspan class="fa-arrow-right fas"></span></a></p>
+
+                <% end_if %>
+                $ContentWxrFiltered.RAW
+            ]]>
+
             <% else_if ClassName == "PolicyHolder" %>
             <![CDATA[
                 <% if $PolicyYear %>
@@ -65,10 +91,53 @@
                 $ContentWxrFiltered.RAW
 
             ]]>
+            <% else_if $ClassName == "DepartmentPage" %>
+                <![CDATA[
+
+                    <% if $OrganizationalUnit %><p>$OrganizationalUnit</p><% end_if %>
+                    $Content
+                    <% if $WebsiteURL %>
+
+                        <p>
+                            <a class="bttn bttn--caps bttn--primary" href="$WebsiteURL" >Visit website <span class="fa-arrow-right fas"></span></a>
+                        </p>
+                    <% end_if %>
+
+                    $ContentWxrFiltered.RAW
+
+                    <div class="dept-stats">
+                        <div class="row">
+                            <div class="column">
+                                <h2><% if $KeyStatTitle %>$KeyStatTitle<% else %>Key Statistics<% end_if %></h2>
+                            </div>
+                        </div>
+                        <div class="stat-cards">
+                            <% if $KeyStat1Num %>
+                            <div class="stat-card">
+                                <div class="stat-card__digit">$KeyStat1Num</div>
+                                <div class="stat-card__text">$KeyStat1Body</div>
+                            </div>
+                             <% end_if %>
+                             <% if $KeyStat2Num %>
+                            <div class="stat-card">
+                                <div class="stat-card__digit">$KeyStat2Num</div>
+                                <div class="stat-card__text">$KeyStat2Body</div>
+                            </div>
+                             <% end_if %>
+                             <% if $KeyStat3Num %>
+                            <div class="stat-card">
+                                <div class="stat-card__digit">$KeyStat3Num</div>
+                                <div class="stat-card__text">$KeyStat3Body</div>
+                            </div>
+                            <% end_if %>
+                        </div>
+                    </div>
+                ]]>
+
             <% else %>
-            <![CDATA[
-                $ContentWxrFiltered.RAW
-            ]]>
+                <![CDATA[
+                    $ContentWxrFiltered.RAW
+                ]]>
             <% end_if %>      
 
         </content:encoded>
