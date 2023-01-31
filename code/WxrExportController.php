@@ -104,7 +104,19 @@ class WxrExportController extends ContentController {
 
             //if a versioned page is orphaned/doesn't have an original page (aka the page has been nuked/archived)
             if(isset($versionedPage->RecordID)){
-                $versionedPages->push($versionedPage);
+
+                //Only get blog posts from the last three years:
+                if($versionedPage->ClassName == "NewsEntry"){
+                    if($versionedPage->Created > '2020-01-01'){
+                        $versionedPages->push($versionedPage);
+                    }
+
+                }else{
+                    $versionedPages->push($versionedPage);
+                }
+
+
+                
             }
 
 
